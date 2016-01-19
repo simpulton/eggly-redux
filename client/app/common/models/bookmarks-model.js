@@ -32,12 +32,14 @@ class BookmarksModel {
   };
 
   getBookmarkById(bookmarkId) {
-    var deferred = $q.defer();
-    if (this.bookmarks) {
-      deferred.resolve(findBookmark(bookmarkId))
+    let deferred = this.$q.defer(),
+        service = this;
+
+    if (service.bookmarks) {
+      deferred.resolve(service.findBookmark(bookmarkId))
     } else {
-      this.getBookmarks().then(function() {
-        deferred.resolve(findBookmark(bookmarkId))
+      service.getBookmarks().then(function() {
+        deferred.resolve(service.findBookmark(bookmarkId))
       })
     }
     return deferred.promise;
@@ -49,15 +51,15 @@ class BookmarksModel {
   };
 
   updateBookmark(bookmark) {
-    var index = _.findIndex(bookmarks, function(b) {
+    var index = _.findIndex(this.bookmarks, function(b) {
       return b.id == bookmark.id
     });
 
-    bookmarks[index] = bookmark;
+    this.bookmarks[index] = bookmark;
   };
 
   deleteBookmark(bookmark) {
-    _.remove(bookmarks, function(b) {
+    _.remove(this.bookmarks, function(b) {
       return b.id == bookmark.id;
     });
   };

@@ -7,7 +7,7 @@ let saveComponent = {
   bindings: {},
   template,
   controller,
-  controllerAs: 'vm'
+  controllerAs: 'bookmarkSaveCtrl'
 };
 
 export default saveComponent;
