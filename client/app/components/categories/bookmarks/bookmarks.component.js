@@ -7,7 +7,7 @@ let bookmarksComponent = {
   bindings: {},
   template,
   controller,
-  controllerAs: 'vm'
+  controllerAs: 'bookmarksListCtrl'
 };
 
 export default bookmarksComponent;

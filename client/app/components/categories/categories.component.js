@@ -7,7 +7,7 @@ let categoriesComponent = {
   bindings: {},
   template,
   controller,
-  controllerAs: 'vm'
+  controllerAs: 'categoriesListCtrl'
 };
 
 export default categoriesComponent;
