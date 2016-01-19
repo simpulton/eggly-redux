@@ -1,10 +1,6 @@
 import angular from 'angular';
-import Home from './home/home';
-import About from './about/about';
 
-let componentModule = angular.module('app.components', [
-  Home.name,
-  About.name
+let componentModule = angular.module('app.components', [ 
 ]);
 
 export default componentModule;
