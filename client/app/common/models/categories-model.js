@@ -25,7 +25,7 @@ class CategoriesModel {
 
   setCurrentCategory(category) {
     let service = this;
-    return service.getCategoryByName(category).then(function(category) {
+    return service.getCategoryByName(category).then((category) => {
       service.currentCategory = category;
     });
   };
@@ -39,11 +39,11 @@ class CategoriesModel {
   };
 
   getCategoryByName(categoryName) {
-    var deferred = this.$q.defer(),
+    let deferred = this.$q.defer(),
         service = this;
 
-    function findCategory() {
-      return _.find(service.categories, function(c) {
+    let findCategory = () => {
+      return _.find(service.categories, (c) => {
         return c.name == categoryName;
       });
     }

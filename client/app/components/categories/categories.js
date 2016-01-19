@@ -6,7 +6,7 @@ let categoriesModule = angular.module('categories', [
   uiRouter
 ])
 
-.config(function($stateProvider) {
+.config(($stateProvider) => {
   'ngInject';
 
   $stateProvider

@@ -1,13 +1,13 @@
 class BookmarksController {
   constructor(CategoriesModel, BookmarksModel, $stateParams) {
     'ngInject';
-    
+
     let bookmarksListCtrl = this;
 
     CategoriesModel.setCurrentCategory($stateParams.category);
 
     BookmarksModel.getBookmarks()
-      .then(function(bookmarks) {
+      .then((bookmarks) => {
         bookmarksListCtrl.bookmarks = bookmarks;
       });
 

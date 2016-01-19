@@ -8,7 +8,7 @@ let bookmarksModule = angular.module('bookmarks', [
   SaveModule.name
 ])
 
-.config(function($stateProvider) {
+.config(($stateProvider) => {
   'ngInject';
 
   $stateProvider

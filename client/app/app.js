@@ -17,7 +17,7 @@ angular.module('app', [
   Common.name
 ])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(($stateProvider, $urlRouterProvider) => {
   'ngInject';
 
   $stateProvider

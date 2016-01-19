@@ -5,7 +5,7 @@ class CategoriesController {
     let categoriesListCtrl = this;
 
     CategoriesModel.getCategories()
-      .then(function(result) {
+      .then((result) => {
         categoriesListCtrl.categories = result;
       });
   }

@@ -1,4 +1,4 @@
-import _ from  'lodash';
+import _ from 'lodash';
 
 class BookmarksModel {
   constructor($http, $q) {
@@ -22,7 +22,7 @@ class BookmarksModel {
   }
 
   findBookmark(bookmarkId) {
-    return _.find(this.bookmarks, function(bookmark) {
+    return _.find(this.bookmarks, (bookmark) => {
       return bookmark.id === parseInt(bookmarkId, 10);
     })
   }
@@ -38,7 +38,7 @@ class BookmarksModel {
     if (service.bookmarks) {
       deferred.resolve(service.findBookmark(bookmarkId))
     } else {
-      service.getBookmarks().then(function() {
+      service.getBookmarks().then(() => {
         deferred.resolve(service.findBookmark(bookmarkId))
       })
     }
@@ -51,7 +51,7 @@ class BookmarksModel {
   };
 
   updateBookmark(bookmark) {
-    var index = _.findIndex(this.bookmarks, function(b) {
+    let index = _.findIndex(this.bookmarks, (b) => {
       return b.id == bookmark.id
     });
 
@@ -59,7 +59,7 @@ class BookmarksModel {
   };
 
   deleteBookmark(bookmark) {
-    _.remove(this.bookmarks, function(b) {
+    _.remove(this.bookmarks, (b) => {
       return b.id == bookmark.id;
     });
   };
