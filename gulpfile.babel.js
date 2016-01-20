@@ -20,6 +20,11 @@ let resolveToApp = (glob) => {
   return path.join(root, 'app', glob); // app/{glob}
 };
 
+let resolveToCounter = (glob) => {
+  glob = glob || '';
+  return path.join(root, 'counter', glob); // app/{glob}
+};
+
 let resolveToComponents = (glob) => {
   glob = glob || '';
   return path.join(root, 'app/components', glob); // app/components/{glob}
@@ -27,7 +32,10 @@ let resolveToComponents = (glob) => {
 
 // map of all paths
 let paths = {
-  js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
+  js: [
+    resolveToApp('**/*!(.spec.js).js'),
+    resolveToCounter('**/*!(.spec.js).js')
+  ], // exclude spec files
   styl: resolveToApp('**/*.styl'), // stylesheets
   html: [
     resolveToApp('**/*.html'),
@@ -54,7 +62,7 @@ gulp.task('serve', () => {
 });
 
 gulp.task('watch', () => {
-  let allPaths = [].concat([paths.js], paths.html, [paths.styl]);
+  let allPaths = [].concat(paths.js, paths.html, [paths.styl]);
   gulp.watch(allPaths, ['webpack', reload]);
 });
 

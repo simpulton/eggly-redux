@@ -9,12 +9,14 @@ import angularComponent from 'angular-component';
 import Components from './components/components';
 import AppComponent from './app.component';
 import Common from './common/common';
+import Counter from '../counter/index';
 
 angular.module('app', [
   uiRouter,
   angularAnimate,
   Components.name,
-  Common.name
+  Common.name,
+  Counter.name
 ])
 
 .config(($stateProvider, $urlRouterProvider) => {
