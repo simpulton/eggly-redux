@@ -17,14 +17,12 @@ import rootReducer from './components/root.reducer';
 // Components
 import Components from './components/components';
 import AppComponent from './app.component';
-import Common from './common/common';
 
 angular.module('app', [
   uiRouter,
   angularAnimate,
   ngRedux,
-  Components.name,
-  Common.name,
+  Components.name
 ])
 
 .config(($stateProvider, $urlRouterProvider, $ngReduxProvider) => {

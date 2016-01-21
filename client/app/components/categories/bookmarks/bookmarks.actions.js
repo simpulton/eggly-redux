@@ -103,7 +103,6 @@ let BookmarksModel = ($http, $q, $state) => {
   };
 
   function cancel() {
-    console.log('cancelling');
     returnToBookmarks();
 
     return resetEditedBookmark();
