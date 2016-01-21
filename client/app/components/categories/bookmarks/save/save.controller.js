@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 class SaveController {
-  constructor(BookmarksModel, $stateParams, $state, $ngRedux) {
+  constructor(BookmarksModel, $stateParams, $ngRedux) {
     'ngInject';
 
     this.$stateParams = $stateParams;

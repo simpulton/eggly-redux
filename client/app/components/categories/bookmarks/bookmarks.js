@@ -26,6 +26,7 @@ let bookmarksModule = angular.module('bookmarks', [
 })
 
 .component('bookmarks', bookmarksComponent)
+
 .factory('BookmarksModel', BookmarksModel);
 
 export default bookmarksModule;

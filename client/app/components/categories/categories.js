@@ -28,6 +28,7 @@ let categoriesModule = angular.module('categories', [
 })
 
 .component('categories', categoriesComponent)
+
 .factory('CategoriesModel', CategoriesModel);
 
 export default categoriesModule;

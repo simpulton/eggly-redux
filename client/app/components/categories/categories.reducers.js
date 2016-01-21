@@ -1,4 +1,4 @@
-export function categories(state = [], action) {
+let categories = (state = [], action) => {
   switch (action.type) {
     case 'ADD':
       return [...state, action.payload];
@@ -9,7 +9,7 @@ export function categories(state = [], action) {
   }
 }
 
-export function category(state = {}, action) {
+let category = (state = {}, action) => {
   switch (action.type) {
     case 'SET_CURRENT_CATEGORY':
       return action.payload || {name: undefined};
@@ -17,3 +17,5 @@ export function category(state = {}, action) {
       return state;
   }
 }
+
+export default {categories, category};

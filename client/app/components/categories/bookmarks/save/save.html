@@ -3,7 +3,9 @@
 </h4>
 <h4 ng-if="bookmarkSaveCtrl.editedBookmark.id">Editing {{bookmarkSaveCtrl.editedBookmark.title}}</h4>
 
-<form class="edit-form" role="form" ng-submit="bookmarkSaveCtrl.save(bookmarkSaveCtrl.editedBookmark)" novalidate>
+<form class="edit-form" role="form"
+      ng-submit="bookmarkSaveCtrl.save(bookmarkSaveCtrl.editedBookmark)" 
+      novalidate>
   <div class="form-group">
     <label>Bookmark Title</label>
     <input type="text" class="form-control" ng-model="bookmarkSaveCtrl.editedBookmark.title" placeholder="Enter title">

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-function bookmarks(state = [], action) {
+let bookmarks = (state = [], action) => {
   switch (action.type) {
     case 'GET_BOOKMARKS':
       return action.payload;
@@ -23,13 +23,9 @@ function bookmarks(state = [], action) {
 }
 
 
-const initialBookmark = {
-  id: null,
-  title: '',
-  url: '',
-  category: null
-};
-function bookmark(state = _.clone(initialBookmark), action) {
+const initialBookmark = { id: null, title: '', url: '', category: null };
+
+let bookmark = (state = _.clone(initialBookmark), action) => {
   switch (action.type) {
     case 'FIND_BOOKMARK':
       return action.payload || state;

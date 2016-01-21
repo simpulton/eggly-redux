@@ -1,6 +1,3 @@
-const ALL = 'ALL';
-const GET_CATEGORIES = 'GET_CATEGORIES';
-const SET_CURRENT_CATEGORY = 'SET_CURRENT_CATEGORY';
 const URLS = {
   FETCH: 'data/categories.json'
 };
@@ -8,75 +5,49 @@ const URLS = {
 export default function CategoriesModel($http, $q) {
   'ngInject';
 
-  function extract(result) {
+  let extract = (result) => {
     return result.data;
   }
 
-  function cacheCategories(result) {
-    this.categories = this.extract(result);
-    return this.categories;
-  }
-
-  function fetchRemoteCategories() {
+  let fetchRemoteCategories = () => {
     return $http.get(URLS.FETCH);
   }
 
-  function getCategories() {
+  let getCategories = () => {
     return (dispatch, getState) => {
       let categories = getState().categories;
 
       if (categories.length) {
-        dispatch({
-          type: GET_CATEGORIES,
-          payload: categories
-        });
+        dispatch({ type: 'GET_CATEGORIES', payload: categories });
       } else {
-        fetchRemoteCategories(dispatch, GET_CATEGORIES)
+        fetchRemoteCategories(dispatch, 'GET_CATEGORIES')
           .then((response) => {
-            dispatch({
-              type: GET_CATEGORIES,
-              payload: extract(response)
-            });
+            dispatch({ type: 'GET_CATEGORIES', payload: extract(response) });
           });
       }
     }
   };
 
-  function setCurrentCategory(categoryName) {
+  let setCurrentCategory = (categoryName) => {
     return (dispatch, getState) => {
       let categories = getState.categories;
 
       if (categories) {
-        dispatch({
-          type: SET_CURRENT_CATEGORY,
-          payload: findCategory(categories, categoryName)
-        });
+        dispatch({ type: 'SET_CURRENT_CATEGORY', payload: findCategory(categories, categoryName) });
       } else {
         fetchRemoteCategories()
           .then((response) => {
-            dispatch({
-              type: SET_CURRENT_CATEGORY,
-              payload: findCategory(extract(response), categoryName)
-            });
+            dispatch({ type: 'SET_CURRENT_CATEGORY', payload: findCategory(extract(response), categoryName) });
           });
       }
     }
   };
 
-  function getCurrentCategory() {
-    return this.currentCategory;
-  };
-
-  function getCurrentCategoryName() {
-    return this.currentCategory ? this.currentCategory.name : '';
-  };
-
-  function findCategory(categories, categoryName) {
+  let findCategory = (categories, categoryName) => {
     return _.find(categories, (c) => {
       return c.name == categoryName;
     });
   }
 
-  return { getCategories, setCurrentCategory, getCurrentCategoryName };
-
+  return { getCategories, setCurrentCategory };
 }
