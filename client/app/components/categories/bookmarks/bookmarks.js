@@ -1,6 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import bookmarksComponent from './bookmarks.component';
+import BookmarksModel from './bookmarks.actions';
 import SaveModule from './save/save';
 
 let bookmarksModule = angular.module('bookmarks', [
@@ -24,6 +25,7 @@ let bookmarksModule = angular.module('bookmarks', [
     });
 })
 
-.component('bookmarks', bookmarksComponent);
+.component('bookmarks', bookmarksComponent)
+.factory('BookmarksModel', BookmarksModel);
 
 export default bookmarksModule;

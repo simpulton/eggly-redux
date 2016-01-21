@@ -1,6 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import categoriesComponent from './categories.component';
+import CategoriesModel from './categories.actions';
 
 let categoriesModule = angular.module('categories', [
   uiRouter
@@ -26,6 +27,7 @@ let categoriesModule = angular.module('categories', [
     });
 })
 
-.component('categories', categoriesComponent);
+.component('categories', categoriesComponent)
+.factory('CategoriesModel', CategoriesModel);
 
 export default categoriesModule;

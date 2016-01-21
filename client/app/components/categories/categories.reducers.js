@@ -12,7 +12,7 @@ export function categories(state = [], action) {
 export function category(state = {}, action) {
   switch (action.type) {
     case 'SET_CURRENT_CATEGORY':
-      return action.payload;
+      return action.payload || {name: undefined};
     default:
       return state;
   }

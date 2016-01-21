@@ -1,13 +1,20 @@
 class CategoriesController {
-  constructor(CategoriesModel) {
+  constructor(CategoriesModel, $scope, $ngRedux) {
     'ngInject';
 
-    let categoriesListCtrl = this;
+    let unsubscribe = $ngRedux.connect(this.mapStateToThis, CategoriesModel)(this);
 
-    CategoriesModel.getCategories()
-      .then((result) => {
-        categoriesListCtrl.categories = result;
-      });
+    this.getCategories();
+
+    $scope.$on('$destroy', unsubscribe);
+  }
+
+  // Which part of the Redux global state does our component want to receive?
+  mapStateToThis(state) {
+    return {
+      categories: state.categories,
+      category: state.category
+    };
   }
 }
 
