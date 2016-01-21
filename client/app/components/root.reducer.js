@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import {categories, category} from './categories/categories.reducers';
-import {bookmarks} from './categories/bookmarks/bookmarks.reducers';
+import {bookmarks, bookmark} from './categories/bookmarks/bookmarks.reducers';
 
 const rootReducer = combineReducers({
   categories,
   category,
-  bookmarks
+  bookmarks,
+  bookmark
 });
 
 export default rootReducer;

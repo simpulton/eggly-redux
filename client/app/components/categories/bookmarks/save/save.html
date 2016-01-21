@@ -1,9 +1,9 @@
-<h4 ng-if="!bookmarkSaveCtrl.bookmark">Create a bookmark in
-  <span class="text-muted">{{bookmarkSaveCtrl.$stateParams.category}}</span>
+<h4 ng-if="!bookmarkSaveCtrl.editedBookmark.id">Create a bookmark in
+  <span class="text-muted">{{bookmarkSaveCtrl.category}}</span>
 </h4>
-<h4 ng-if="bookmarkSaveCtrl.bookmark">Editing {{bookmarkSaveCtrl.bookmark.title}}</h4>
+<h4 ng-if="bookmarkSaveCtrl.editedBookmark.id">Editing {{bookmarkSaveCtrl.editedBookmark.title}}</h4>
 
-<form class="edit-form" role="form" ng-submit="bookmarkSaveCtrl.saveBookmark(bookmarkSaveCtrl.editedBookmark)" novalidate>
+<form class="edit-form" role="form" ng-submit="bookmarkSaveCtrl.save(bookmarkSaveCtrl.editedBookmark)" novalidate>
   <div class="form-group">
     <label>Bookmark Title</label>
     <input type="text" class="form-control" ng-model="bookmarkSaveCtrl.editedBookmark.title" placeholder="Enter title">

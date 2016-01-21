@@ -1,11 +1,16 @@
 const ALL = 'ALL';
 const GET_BOOKMARKS = 'GET_BOOKMARKS';
+const FIND_BOOKMARK = 'FIND_BOOKMARK';
+const CREATE_BOOKMARK = 'CREATE_BOOKMARK';
+const EDIT_BOOKMARK = 'EDIT_BOOKMARK';
 const DELETE_BOOKMARK = 'DELETE_BOOKMARK';
+const SET_BOOKMARK_ID = 'SET_BOOKMARK_ID';
+const RESET_EDITED_BOOKMARK = 'RESET_EDITED_BOOKMARK';
 const URLS = {
   FETCH: 'data/bookmarks.json'
 };
 
-export default function BookmarksModel($http, $q) {
+let BookmarksModel = ($http, $q, $state) => {
   'ngInject';
 
   function extract(result) {
@@ -15,12 +20,6 @@ export default function BookmarksModel($http, $q) {
   function cacheBookmarks(result) {
     this.bookmarks = this.extract(result);
     return this.bookmarks;
-  }
-
-  function findBookmark(bookmarkId) {
-    return _.find(this.bookmarks, (bookmark) => {
-      return bookmark.id === parseInt(bookmarkId, 10);
-    })
   }
 
   function fetchRemoteBookmarks() {
@@ -42,23 +41,50 @@ export default function BookmarksModel($http, $q) {
     }
   };
 
-  function getBookmarkById(bookmarkId) {
-    let deferred = this.$q.defer(),
-        service = this;
+  function findBookmark(bookmarks, bookmarkId) {
+    return _.find(bookmarks, (bookmark) => {
+      return bookmark.id === parseInt(bookmarkId, 10);
+    });
+  }
 
-    if (service.bookmarks) {
-      deferred.resolve(service.findBookmark(bookmarkId))
-    } else {
-      service.getBookmarks().then(() => {
-        deferred.resolve(service.findBookmark(bookmarkId))
-      })
+  function getBookmarkById(bookmarkId) {
+    return (dispatch, getState) => {
+      let bookmarks = getState().bookmarks;
+
+      if (bookmarks.length) {
+        dispatch({ type: FIND_BOOKMARK, payload: findBookmark(bookmarks, bookmarkId) });
+      } else {
+        fetchRemoteBookmarks()
+          .then((response) => {
+            dispatch({ type: FIND_BOOKMARK, payload: findBookmark(extract(response), bookmarkId) });
+          });
+      }
     }
-    return deferred.promise;
   };
 
+  function saveBookmark(bookmark, bookmarkId, category) {
+    return (dispatch, getState) => {
+      let bookmarks = getState().bookmarks;
+      bookmark.id = bookmarks.length;
+
+      if (!bookmark.category) bookmark.category = category;
+
+      return bookmarkId
+        ? dispatch({ type: EDIT_BOOKMARK, payload: bookmark })
+        : dispatch({ type: CREATE_BOOKMARK, payload: bookmark });
+    }
+  }
+
+  function resetEditedBookmark() {
+    return {
+      type: RESET_EDITED_BOOKMARK
+    }
+  }
+
   function createBookmark(bookmark) {
-    bookmark.id = this.bookmarks.length;
-    this.bookmarks.push(bookmark);
+    return (dispatch, getState) => {
+      console.log(getState());
+    }
   };
 
   function updateBookmark(bookmark) {
@@ -76,6 +102,20 @@ export default function BookmarksModel($http, $q) {
     }
   };
 
-  return { getBookmarks, deleteBookmark };
+  function cancel() {
+    console.log('cancelling');
+    returnToBookmarks();
 
+    return resetEditedBookmark();
+  }
+
+  function returnToBookmarks() {
+    $state.go('eggly.categories.bookmarks');
+
+    return { type: null };
+  }
+
+  return { getBookmarks, deleteBookmark, getBookmarkById, saveBookmark, resetEditedBookmark, returnToBookmarks, cancel };
 }
+
+export default BookmarksModel;

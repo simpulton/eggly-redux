@@ -1,56 +1,26 @@
 import _ from 'lodash';
 
 class SaveController {
-  constructor(BookmarksModel, $stateParams, $state) {
+  constructor(BookmarksModel, $stateParams, $state, $ngRedux) {
     'ngInject';
 
-    this.editedBookmark = {
-      id: null,
-      title: '',
-      url: '',
-      category: null
-    }
-
-    this.$state = $state;
     this.$stateParams = $stateParams;
-    this.BookmarksModel = BookmarksModel;
 
-    this.initBookmarks();
-    this.initEditedBookmark();
+    let unsubscribe = $ngRedux.connect(this.mapStateToThis, BookmarksModel)(this);
+    this.getBookmarkById($stateParams.bookmarkId);
   }
 
-  initEditedBookmark() {
-    this.editedBookmark.category = this.$stateParams.category;
+  mapStateToThis(state) {
+    return {
+      editedBookmark: state.bookmark,
+      bookmarks: state.bookmarks
+    };
   }
 
-  initBookmarks() {
-    let id = this.$stateParams.bookmarkId,
-        bookmarkSaveCtrl = this;
-
-    bookmarkSaveCtrl.BookmarksModel.getBookmarkById(id)
-      .then((response) => {
-        bookmarkSaveCtrl.bookmark = response;
-        if (bookmarkSaveCtrl.bookmark) {
-          bookmarkSaveCtrl.editedBookmark = _.clone(bookmarkSaveCtrl.bookmark);
-        }
-      });
-  }
-
-  returnToBookmarks() {
-    this.$state.go('eggly.categories.bookmarks');
-  }
-
-  saveBookmark() {
-    if (this.editedBookmark.id) {
-      this.BookmarksModel.updateBookmark(this.editedBookmark);
-    } else {
-      this.BookmarksModel.createBookmark(this.editedBookmark);
-    }
+  save(bookmark) {
+    this.saveBookmark(bookmark, bookmark.id, this.$stateParams.category);
     this.returnToBookmarks();
-  }
-
-  cancel() {
-    this.returnToBookmarks();
+    this.resetEditedBookmark();
   }
 }
 
