@@ -3,7 +3,6 @@ class CategoriesController {
     'ngInject';
 
     let unsubscribe = $ngRedux.connect(this.mapStateToThis, CategoriesModel)(this);
-
     this.getCategories();
 
     $scope.$on('$destroy', unsubscribe);

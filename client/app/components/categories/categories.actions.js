@@ -2,15 +2,11 @@ const URLS = {
   FETCH: 'data/categories.json'
 };
 
-export default function CategoriesModel($http, $q) {
+let CategoriesModel = ($http, $q) => {
   'ngInject';
 
   let extract = (result) => {
     return result.data;
-  }
-
-  let fetchRemoteCategories = () => {
-    return $http.get(URLS.FETCH);
   }
 
   let getCategories = () => {
@@ -18,27 +14,12 @@ export default function CategoriesModel($http, $q) {
       let categories = getState().categories;
 
       if (categories.length) {
-        dispatch({ type: 'GET_CATEGORIES', payload: categories });
+        return $q.when(categories)
+          .then(() => dispatch({ type: 'GET_CATEGORIES', payload: categories }));
       } else {
-        fetchRemoteCategories(dispatch, 'GET_CATEGORIES')
-          .then((response) => {
-            dispatch({ type: 'GET_CATEGORIES', payload: extract(response) });
-          });
-      }
-    }
-  };
-
-  let setCurrentCategory = (categoryName) => {
-    return (dispatch, getState) => {
-      let categories = getState.categories;
-
-      if (categories) {
-        dispatch({ type: 'SET_CURRENT_CATEGORY', payload: findCategory(categories, categoryName) });
-      } else {
-        fetchRemoteCategories()
-          .then((response) => {
-            dispatch({ type: 'SET_CURRENT_CATEGORY', payload: findCategory(extract(response), categoryName) });
-          });
+        return $http.get(URLS.FETCH)
+          .then(extract)
+          .then(data => dispatch({ type: 'GET_CATEGORIES', payload: data }));
       }
     }
   };
@@ -49,5 +30,18 @@ export default function CategoriesModel($http, $q) {
     });
   }
 
+  let setCurrentCategory = (categoryName) => {
+    return (dispatch, getState) => {
+      let categories;
+
+      dispatch(getCategories()).then(() => {
+        categories = getState().categories;
+        dispatch({ type: 'SET_CURRENT_CATEGORY', payload: findCategory(categories, categoryName) });
+      });
+    }
+  };
+
   return { getCategories, setCurrentCategory };
 }
+
+export default CategoriesModel;

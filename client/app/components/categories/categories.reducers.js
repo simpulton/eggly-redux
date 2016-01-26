@@ -1,18 +1,18 @@
-let categories = (state = [], action) => {
-  switch (action.type) {
+let categories = (state = [], {type, payload}) => {
+  switch (type) {
     case 'ADD':
-      return [...state, action.payload];
+      return [...state, payload];
     case 'GET_CATEGORIES':
-      return action.payload;
+      return payload;
     default:
       return state;
   }
 }
 
-let category = (state = {}, action) => {
-  switch (action.type) {
+let category = (state = {}, {type, payload}) => {
+  switch (type) {
     case 'SET_CURRENT_CATEGORY':
-      return action.payload || {name: undefined};
+      return payload || { name: undefined };
     default:
       return state;
   }

@@ -1,10 +1,10 @@
-<h4 ng-if="!bookmarkSaveCtrl.editedBookmark.id">Create a bookmark in
-  <span class="text-muted">{{bookmarkSaveCtrl.category}}</span>
+<h4 ng-if="!bookmarkSaveCtrl.currentBookmarkExists()">Create a bookmark in
+  <span class="text-muted">{{bookmarkSaveCtrl.category.name}}</span>
 </h4>
-<h4 ng-if="bookmarkSaveCtrl.editedBookmark.id">Editing {{bookmarkSaveCtrl.editedBookmark.title}}</h4>
+<h4 ng-if="bookmarkSaveCtrl.currentBookmarkExists()">Editing {{::bookmarkSaveCtrl.editedBookmark.title}}</h4>
 
 <form class="edit-form" role="form"
-      ng-submit="bookmarkSaveCtrl.save(bookmarkSaveCtrl.editedBookmark)" 
+      ng-submit="bookmarkSaveCtrl.save()"
       novalidate>
   <div class="form-group">
     <label>Bookmark Title</label>

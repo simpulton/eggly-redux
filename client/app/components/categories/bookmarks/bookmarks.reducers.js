@@ -1,21 +1,18 @@
-import _ from 'lodash';
+import {clone, reject} from 'lodash';
 
-let bookmarks = (state = [], action) => {
-  switch (action.type) {
+let bookmarks = (state = [], {type, payload}) => {
+  switch (type) {
     case 'GET_BOOKMARKS':
-      return action.payload;
+      return payload;
     case 'CREATE_BOOKMARK':
-      return [ ...state, action.payload ];
+      return [ ...state, payload ];
     case 'EDIT_BOOKMARK':
-      let index = _.indexOf(state, action.payload);
-      return [
-        ...state.slice(0, index),
-        action.payload,
-        ...state.slice(index + 1)
-      ];
+      return state.map(bookmark => {
+        return bookmark.id === payload.id ? clone(payload) : bookmark;
+      });
     case 'DELETE_BOOKMARK':
-      return _.reject(state, (b) => {
-        return b.id == action.payload.id;
+      return reject(state, (b) => {
+        return b.id == payload.id;
       });
     default:
       return state;
@@ -25,10 +22,10 @@ let bookmarks = (state = [], action) => {
 
 const initialBookmark = { id: null, title: '', url: '', category: null };
 
-let bookmark = (state = _.clone(initialBookmark), action) => {
-  switch (action.type) {
+let bookmark = (state = clone(initialBookmark), {type, payload}) => {
+  switch (type) {
     case 'FIND_BOOKMARK':
-      return action.payload || state;
+      return payload || state;
     case 'RESET_EDITED_BOOKMARK':
       return initialBookmark;
     default:

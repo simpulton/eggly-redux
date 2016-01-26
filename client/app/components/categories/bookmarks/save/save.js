@@ -8,15 +8,14 @@ let saveModule = angular.module('save', [
 
 .config(($stateProvider) => {
   'ngInject';
+
   $stateProvider
     .state('eggly.categories.bookmarks.create', {
       url: '/bookmarks/create',
-      //target the un-named 'ui-view' in PARENT states template
       template: '<save></save>'
     })
     .state('eggly.categories.bookmarks.edit', {
       url: '/bookmarks/:bookmarkId/edit',
-      //target the un-named 'ui-view' in PARENT states template
       template: '<save></save>'
     })
 })
