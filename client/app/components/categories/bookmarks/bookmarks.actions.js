@@ -44,6 +44,12 @@ let BookmarksModel = ($http, $q, $state) => {
   };
 
   let saveBookmark = (bookmark, category) => {
+    returnToBookmarks();
+    resetEditedBookmark();
+    return save(bookmark, category);
+  }
+
+  let save = (bookmark, category) => {
     return (dispatch, getState) => {
       let bookmarks = getState().bookmarks,
           hasId = !!bookmark.id;
@@ -61,7 +67,7 @@ let BookmarksModel = ($http, $q, $state) => {
     return { type: 'RESET_EDITED_BOOKMARK' }
   }
 
-  let deleteBookmark = (bookmark) => {
+  let deleteBookmark = bookmark => {
     return { type: 'DELETE_BOOKMARK', payload: bookmark }
   };
 

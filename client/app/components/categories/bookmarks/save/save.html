@@ -4,7 +4,7 @@
 <h4 ng-if="bookmarkSaveCtrl.currentBookmarkExists()">Editing {{::bookmarkSaveCtrl.editedBookmark.title}}</h4>
 
 <form class="edit-form" role="form"
-      ng-submit="bookmarkSaveCtrl.save()"
+      ng-submit="bookmarkSaveCtrl.saveBookmark(bookmarkSaveCtrl.editedBookmark, bookmarkSaveCtrl.$stateParams.category)"
       novalidate>
   <div class="form-group">
     <label>Bookmark Title</label>

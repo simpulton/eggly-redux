@@ -7,6 +7,7 @@ class SaveController {
     this.$stateParams = $stateParams;
 
     let unsubscribe = $ngRedux.connect(this.mapStateToThis, BookmarksModel)(this);
+    this.resetEditedBookmark();
     this.getBookmarkById($stateParams.bookmarkId);
 
     $scope.$on('$destroy', unsubscribe);
@@ -18,12 +19,6 @@ class SaveController {
       bookmarks: state.bookmarks,
       category: state.category
     };
-  }
-
-  save() {
-    this.saveBookmark(this.editedBookmark, this.$stateParams.category);
-    this.returnToBookmarks();
-    this.resetEditedBookmark();
   }
 
   currentBookmarkExists() {

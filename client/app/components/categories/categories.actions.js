@@ -1,3 +1,5 @@
+import {find} from 'lodash';
+
 const URLS = {
   FETCH: 'data/categories.json'
 };
@@ -25,7 +27,7 @@ let CategoriesModel = ($http, $q) => {
   };
 
   let findCategory = (categories, categoryName) => {
-    return _.find(categories, (c) => {
+    return find(categories, (c) => {
       return c.name == categoryName;
     });
   }
