@@ -4,7 +4,7 @@ This is a simple bookmark manager built with AngularJS, [ng-redux](https://githu
 ## Getting Started
 You will need `node` (`brew install node` or https://nodejs.org/en/) and `npm` (which ships with node).
 
-# Installing
+## Installing
 ```bash
 git clone https://github.com/simpulton/eggly-redux.git
 cd eggly-redux
