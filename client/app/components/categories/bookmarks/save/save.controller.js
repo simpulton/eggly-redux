@@ -21,6 +21,12 @@ class SaveController {
     };
   }
 
+  save() {
+    this.saveBookmark(this.editedBookmark, this.$stateParams.category);
+    this.returnToBookmarks();
+    this.resetSelectedBookmark();
+  }
+
   currentBookmarkExists() {
     return this.editedBookmark.id || this.editedBookmark.id === 0;
   }

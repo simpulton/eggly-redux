@@ -44,12 +44,6 @@ let BookmarksModel = ($http, $q, $state) => {
   };
 
   let saveBookmark = (bookmark, category) => {
-    returnToBookmarks();
-    resetSelectedBookmark();
-    return save(bookmark, category);
-  }
-
-  let save = (bookmark, category) => {
     return (dispatch, getState) => {
       let bookmarks = getState().bookmarks,
           hasId = !!bookmark.id;
