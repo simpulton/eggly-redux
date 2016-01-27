@@ -1,7 +1,5 @@
 let categories = (state = [], {type, payload}) => {
   switch (type) {
-    case 'ADD':
-      return [...state, payload];
     case 'GET_CATEGORIES':
       return payload;
     default:

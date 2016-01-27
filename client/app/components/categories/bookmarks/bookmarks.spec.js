@@ -1,53 +1,97 @@
-import BookmarksModule from './bookmarks'
-import BookmarksController from './bookmarks.controller';
-import BookmarksComponent from './bookmarks.component';
-import BookmarksTemplate from './bookmarks.html';
+import {bookmarks, bookmark} from './bookmarks.reducers';
 
 describe('Bookmarks', () => {
-  let $rootScope, makeController;
+  describe('`bookmarks` reducer', () => {
+    let initialState = [
+      {id: 0, title: 'AngularJS' },
+      {id: 1, title: 'Egghead.io' }
+    ];
 
-  beforeEach(window.module(BookmarksModule.name));
-  beforeEach(inject((_$rootScope_) => {
-    $rootScope = _$rootScope_;
-    makeController = () => {
-      return new BookmarksController();
-    };
-  }));
+    it('unkown action should return state', () => {
+      let result = bookmarks(initialState, { type: 'random', payload: {} });
+      expect(result).toBe(initialState);
+    });
 
-  describe('Module', () => {
-    // top-level specs: i.e., routes, injection, naming
-  });
+    it('should return empty array for state by default', () => {
+      let result = bookmarks(undefined, { type: 'random', payload: {} });
+      expect(result).toEqual([]);
+    });
 
-  describe('Controller', () => {
-    // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
+    it('`GET_BOOKMARKS` should return the payload', () => {
+      let result = bookmarks(undefined, {
+        type: 'GET_BOOKMARKS',
+        payload: initialState
+      });
+
+      expect(result).toEqual(initialState);
+    });
+
+    it('`CREATE_BOOKMARK` should return state with added object', () => {
+      let newBookmark = { id: 2, title: 'A List Apart' },
+          nextState = [ ...initialState, newBookmark ],
+          result = bookmarks(initialState, {
+            type: 'CREATE_BOOKMARK',
+            payload: newBookmark
+          });
+
+      expect(result).toEqual(nextState);
+    });
+
+    it('`EDIT_BOOKMARK` should return state with replaced object', () => {
+      let updatedBookmark = { id: 0, title: 'AngularJS updated' },
+        result = bookmarks(initialState, {
+          type: 'EDIT_BOOKMARK',
+          payload: updatedBookmark
+        });
+
+      expect(result[0].title).toBe(updatedBookmark.title);
+    });
+
+    it('`DELETE_BOOKMARK` should return state without object', () => {
+      let deletedBookmark = { id: 0, title: 'AngularJS' },
+        result = bookmarks(initialState, {
+          type: 'DELETE_BOOKMARK',
+          payload: deletedBookmark
+        });
+
+      expect(result).not.toContain(deletedBookmark);
     });
   });
 
-  describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(BookmarksTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+  describe('`bookmark` reducer', () => {
+    let initialState = { id: 0, title: 'AngularJS' },
+        initializedBookmark = { id: null, title: '', url: '', category: null };
+
+    it('unkown action should return state', () => {
+      let result = bookmark(initialState, { type: 'random', payload: {} });
+      expect(result).toBe(initialState);
     });
-  });
 
-  describe('Component', () => {
-      // component/directive specs
-      let component = BookmarksComponent;
+    it('should return initialized object for state by default', () => {
+      let result = bookmark(undefined, { type: 'random', payload: {} });
 
-      it('includes the intended template',() => {
-        expect(component.template).to.equal(BookmarksTemplate);
-      });
+      expect(result).toEqual(initializedBookmark);
+    });
 
-      it('uses `controllerAs` syntax', () => {
-        expect(component).to.have.property('controllerAs');
-      });
+    it('`GET_SELECTED_BOOKMARK` returns the payload if defined', () => {
+      let selectedBookmark = {id: 1, title: 'Egghead.io' },
+          result = bookmark(initialState, {
+            type: 'GET_SELECTED_BOOKMARK',
+            payload: selectedBookmark
+          }),
+          fallbackResult = bookmark(initialState, {
+            type: 'GET_SELECTED_BOOKMARK',
+            payload: undefined
+          });
 
-      it('invokes the right controller', () => {
-        expect(component.controller).to.equal(BookmarksController);
-      });
+      expect(result).toEqual(selectedBookmark);
+      expect(fallbackResult).toEqual(initialState);
+    });
+
+    it('`RESET_SELECTED_BOOKMARK` returns initialized object', () => {
+      let result = bookmark(initialState, { type: 'RESET_SELECTED_BOOKMARK' });
+
+      expect(result).toEqual(initializedBookmark);
+    });
   });
 });

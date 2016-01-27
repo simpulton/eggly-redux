@@ -1,53 +1,58 @@
-import CategoriesModule from './categories'
-import CategoriesController from './categories.controller';
-import CategoriesComponent from './categories.component';
-import CategoriesTemplate from './categories.html';
+import {categories, category} from './categories.reducers';
 
 describe('Categories', () => {
-  let $rootScope, makeController;
+  describe('`categories` reducer', () => {
+    let initialState = [
+      {id: 0, name: 'Development'},
+      {id: 1, name: 'Design'}
+    ];
 
-  beforeEach(window.module(CategoriesModule.name));
-  beforeEach(inject((_$rootScope_) => {
-    $rootScope = _$rootScope_;
-    makeController = () => {
-      return new CategoriesController();
-    };
-  }));
+    it('unkown action should return state', () => {
+      let result = categories(initialState, { type: 'random', payload: {} });
+      expect(result).toBe(initialState);
+    });
 
-  describe('Module', () => {
-    // top-level specs: i.e., routes, injection, naming
-  });
+    it('should return empty array for state by default', () => {
+      let result = categories(undefined, { type: 'random', payload: {} });
+      expect(result).toEqual([]);
+    });
 
-  describe('Controller', () => {
-    // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
+    it('`GET_CATEGORIES` returns the payload', () => {
+      let result = categories(undefined, {
+        type: 'GET_CATEGORIES',
+        payload: initialState
+      });
+
+      expect(result).toEqual(initialState);
     });
   });
 
-  describe('Template', () => {
-    // template specs
-    // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
-      expect(CategoriesTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+  describe('`category` reducer', () => {
+    let initialState = { id: 0, name: 'Development' };
+
+    it('unkown action should return state', () => {
+      let result = category(initialState, { type: 'random', payload: {} });
+      expect(result).toBe(initialState);
     });
-  });
 
-  describe('Component', () => {
-      // component/directive specs
-      let component = CategoriesComponent;
+    it('should return empty object for state by default', () => {
+      let result = category(undefined, { type: 'random', payload: {} });
+      expect(result).toEqual({});
+    });
 
-      it('includes the intended template',() => {
-        expect(component.template).to.equal(CategoriesTemplate);
-      });
+    it('`SET_CURRENT_CATEGORY` returns the payload if defined', () => {
+      let newCategory = { id: 1, name: 'Design' },
+          result = category(initialState, {
+            type: 'SET_CURRENT_CATEGORY',
+            payload: newCategory
+          }),
+          emptyResult = category(initialState, {
+            type: 'SET_CURRENT_CATEGORY',
+            payload: undefined
+          });
 
-      it('uses `controllerAs` syntax', () => {
-        expect(component).to.have.property('controllerAs');
-      });
-
-      it('invokes the right controller', () => {
-        expect(component.controller).to.equal(CategoriesController);
-      });
+      expect(result).toEqual(newCategory);
+      expect(emptyResult.name).toBeUndefined();
+    });
   });
 });
