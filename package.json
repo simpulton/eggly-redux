@@ -1,8 +1,8 @@
 {
-  "name": "ng6-starter",
+  "name": "eggly-redux",
   "version": "0.0.1",
-  "description": "Starter for Angular + ES6 + (Webpack or JSPM)",
-  "main": "index.js",
+  "description": "Simple bookmark manager built with Angular 1.x, ng-redux, Webpack, and Gulp.",
+  "main": "client/bundle.js",
   "dependencies": {
     "angular": "^1.4.4",
     "angular-animate": "^1.4.8",
@@ -20,7 +20,6 @@
     "babel-core": "^5.4.2",
     "babel-loader": "^5.0.0",
     "browser-sync": "^2.7.1",
-    "chai": "^3.4.0",
     "css-loader": "^0.19.0",
     "file-loader": "^0.8.5",
     "fs-walk": "0.0.1",
@@ -30,16 +29,11 @@
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.9",
-    "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
-    "karma-mocha": "^0.2.0",
-    "karma-mocha-reporter": "^1.0.2",
     "karma-phantomjs-launcher": "^0.2.3",
     "karma-sourcemap-loader": "^0.3.4",
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "^1.5.1",
-    "mocha": "^2.3.0",
     "ng-annotate-loader": "0.0.10",
     "node-libs-browser": "^0.5.0",
     "phantomjs": "^2.1.2",
@@ -58,12 +52,23 @@
   "keywords": [
     "angular",
     "webpack",
-    "es6"
+    "es6",
+    "redux",
+    "ng-redux"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/angularclass/NG6-starter.git"
+    "url": "https://github.com/simpulton/eggly-redux.git"
   },
-  "author": "AngularClass",
+  "author": {
+    "name": "Lukas Ruebbelke",
+    "url": "http://onehungrymind.com/",
+    "email": "simpul@gmail.com"
+  },
+  "contributors": [{
+    "name": "Jonathan Garvey",
+    "url": "https://github.com/jdgarvey",
+    "email": "jon.d.garvey@gmail.com"
+  }],
   "license": "Apache-2.0"
 }
