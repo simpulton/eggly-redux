@@ -38,14 +38,14 @@ let BookmarksModel = ($http, $q, $state) => {
 
       dispatch(getBookmarks()).then(() => {
         bookmarks = getState().bookmarks;
-        dispatch({ type: 'FIND_BOOKMARK', payload: findBookmark(bookmarks, bookmarkId) });
+        dispatch({ type: 'GET_SELECTED_BOOKMARK', payload: findBookmark(bookmarks, bookmarkId) });
       });
     }
   };
 
   let saveBookmark = (bookmark, category) => {
     returnToBookmarks();
-    resetEditedBookmark();
+    resetSelectedBookmark();
     return save(bookmark, category);
   }
 
@@ -63,8 +63,8 @@ let BookmarksModel = ($http, $q, $state) => {
     }
   }
 
-  let resetEditedBookmark = () => {
-    return { type: 'RESET_EDITED_BOOKMARK' }
+  let resetSelectedBookmark = () => {
+    return { type: 'RESET_SELECTED_BOOKMARK' }
   }
 
   let deleteBookmark = bookmark => {
@@ -74,16 +74,16 @@ let BookmarksModel = ($http, $q, $state) => {
   let cancel = () => {
     returnToBookmarks();
 
-    return resetEditedBookmark();
+    return resetSelectedBookmark();
   }
 
   let returnToBookmarks = () => {
     $state.go('eggly.categories.bookmarks');
 
-    return resetEditedBookmark();
+    return resetSelectedBookmark();
   }
 
-  return { getBookmarks, deleteBookmark, getBookmarkById, saveBookmark, resetEditedBookmark, returnToBookmarks, cancel };
+  return { getBookmarks, deleteBookmark, getBookmarkById, saveBookmark, resetSelectedBookmark, returnToBookmarks, cancel };
 }
 
 export default BookmarksModel;

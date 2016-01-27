@@ -24,9 +24,9 @@ const initialBookmark = { id: null, title: '', url: '', category: null };
 
 let bookmark = (state = clone(initialBookmark), {type, payload}) => {
   switch (type) {
-    case 'FIND_BOOKMARK':
+    case 'GET_SELECTED_BOOKMARK':
       return payload || state;
-    case 'RESET_EDITED_BOOKMARK':
+    case 'RESET_SELECTED_BOOKMARK':
       return initialBookmark;
     default:
       return state;
