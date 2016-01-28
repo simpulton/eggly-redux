@@ -9,9 +9,9 @@ You will need `node` (`brew install node` or https://nodejs.org/en/) and `npm` (
 git clone https://github.com/simpulton/eggly-redux.git
 cd eggly-redux
 npm i
-gulp
+npm run start
 ```
-  
+
 ## Testing
 To run the tests, run `npm test` or `karma start`.
 
