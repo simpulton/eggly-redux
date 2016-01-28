@@ -67,9 +67,9 @@
     "email": "simpul@gmail.com"
   },
   "contributors": [{
-      "name": "Jonathan Garvey",
-      "url": "https://github.com/jdgarvey",
-      "email": "jon.d.garvey@gmail.com"
+    "name": "Jonathan Garvey",
+    "url": "https://github.com/jdgarvey",
+    "email": "jon.d.garvey@gmail.com"
   }],
   "license": "Apache-2.0"
 }
