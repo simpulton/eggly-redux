@@ -66,12 +66,10 @@
     "url": "http://onehungrymind.com/",
     "email": "simpul@gmail.com"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Jonathan Garvey",
       "url": "https://github.com/jdgarvey",
       "email": "jon.d.garvey@gmail.com"
-    }
-  ],
+  }],
   "license": "Apache-2.0"
 }
