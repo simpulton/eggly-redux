@@ -8,7 +8,7 @@ let bookmarks = (state = [], {type, payload}) => {
       return [ ...state, payload ];
     case 'EDIT_BOOKMARK':
       return state.map(bookmark => {
-        return bookmark.id === payload.id ? clone(payload) : bookmark;
+        return bookmark.id === payload.id ? payload : bookmark;
       });
     case 'DELETE_BOOKMARK':
       return reject(state, (b) => {
@@ -22,7 +22,7 @@ let bookmarks = (state = [], {type, payload}) => {
 
 const initialBookmark = { id: null, title: '', url: '', category: null };
 
-let bookmark = (state = clone(initialBookmark), {type, payload}) => {
+let bookmark = (state = initialBookmark, {type, payload}) => {
   switch (type) {
     case 'GET_SELECTED_BOOKMARK':
       return payload || state;
