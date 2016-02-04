@@ -2,9 +2,13 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import categoriesComponent from './categories.component';
 import CategoriesModel from './categories.actions';
+import CategoryItemModule from './categoryItem/categoryItem';
+import BookmarksModule from './bookmarks/bookmarks';
 
 let categoriesModule = angular.module('categories', [
-  uiRouter
+  uiRouter,
+  CategoryItemModule.name,
+  BookmarksModule.name
 ])
 
 .config(($stateProvider) => {

@@ -17,7 +17,7 @@ let saveModule = angular.module('save', [
     .state('eggly.categories.bookmarks.edit', {
       url: '/bookmarks/:bookmarkId/edit',
       template: '<save></save>'
-    })
+    });
 })
 
 .component('save', saveComponent);
