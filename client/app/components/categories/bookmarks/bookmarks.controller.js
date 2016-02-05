@@ -1,8 +1,8 @@
 class BookmarksController {
-  constructor(CategoriesModel, BookmarksModel, $stateParams, $ngRedux, $scope) {
+  constructor(CategoriesActions, BookmarksActions, $stateParams, $ngRedux, $scope) {
     'ngInject';
 
-    let actions = Object.assign({}, BookmarksModel, CategoriesModel),
+    let actions = Object.assign({}, BookmarksActions, CategoriesActions),
         unsubscribe = $ngRedux.connect(this.mapStateToThis, actions)(this);
 
     this.getBookmarks();

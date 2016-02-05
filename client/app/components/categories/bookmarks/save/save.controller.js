@@ -1,12 +1,12 @@
 import {clone} from 'lodash';
 
 class SaveController {
-  constructor(BookmarksModel, $stateParams, $ngRedux, $scope) {
+  constructor(BookmarksActions, $stateParams, $ngRedux, $scope) {
     'ngInject';
 
     this.$stateParams = $stateParams;
 
-    let unsubscribe = $ngRedux.connect(this.mapStateToThis, BookmarksModel)(this);
+    let unsubscribe = $ngRedux.connect(this.mapStateToThis, BookmarksActions)(this);
     this.resetSelectedBookmark();
     this.getBookmarkById($stateParams.bookmarkId);
 

@@ -1,7 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import categoriesComponent from './categories.component';
-import CategoriesModel from './categories.actions';
 import CategoryItemModule from './categoryItem/categoryItem';
 import BookmarksModule from './bookmarks/bookmarks';
 
@@ -28,8 +27,6 @@ let categoriesModule = angular.module('categories', [
     });
 })
 
-.component('categories', categoriesComponent)
-
-.factory('CategoriesModel', CategoriesModel);
+.component('categories', categoriesComponent);
 
 export default categoriesModule;

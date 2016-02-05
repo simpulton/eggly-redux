@@ -1,26 +1,25 @@
 import 'bootstrap-css-only';
 import 'normalize.css';
 
+// Angular
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import angularComponent from 'angular-component';
-
-// Redux dependencies
-import ngRedux from 'ng-redux';
-import thunk from 'redux-thunk';
-import rootReducer from './components/root.reducer';
 
 // Components
 import Components from './components/components';
 import AppComponent from './app.component';
 
+// State
+import State from './state/state';
+
 angular.module('app', [
   uiRouter,
-  ngRedux,
+  State.name,
   Components.name
 ])
 
-.config(($stateProvider, $urlRouterProvider, $ngReduxProvider) => {
+.config(($stateProvider, $urlRouterProvider) => {
   'ngInject';
 
   $urlRouterProvider.otherwise('/');
@@ -31,8 +30,6 @@ angular.module('app', [
     url: '',
     abstract: true
   });
-
-  $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
 })
 
 .component('app', AppComponent);
