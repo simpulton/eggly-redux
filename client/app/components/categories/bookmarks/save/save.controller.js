@@ -5,12 +5,17 @@ class SaveController {
     'ngInject';
 
     this.$stateParams = $stateParams;
+    this.$ngRedux = $ngRedux;
+    this.$scope = $scope;
+    this.BookmarksActions = BookmarksActions;
+  }
 
-    let unsubscribe = $ngRedux.connect(this.mapStateToThis, BookmarksActions)(this);
+  $onInit() {
+    let unsubscribe = this.$ngRedux.connect(this.mapStateToThis, this.BookmarksActions)(this);
     this.resetSelectedBookmark();
-    this.getBookmarkById($stateParams.bookmarkId);
+    this.getBookmarkById(this.$stateParams.bookmarkId);
 
-    $scope.$on('$destroy', unsubscribe);
+    this.$scope.$on('$destroy', unsubscribe);
   }
 
   mapStateToThis(state) {

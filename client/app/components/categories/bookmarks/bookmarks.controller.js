@@ -2,13 +2,21 @@ class BookmarksController {
   constructor(CategoriesActions, BookmarksActions, $stateParams, $ngRedux, $scope) {
     'ngInject';
 
-    let actions = Object.assign({}, BookmarksActions, CategoriesActions),
-        unsubscribe = $ngRedux.connect(this.mapStateToThis, actions)(this);
+    this.CategoriesActions = CategoriesActions;
+    this.BookmarksActions = BookmarksActions;
+    this.$stateParams = $stateParams;
+    this.$ngRedux = $ngRedux;
+    this.$scope = $scope;
+  }
+
+  $onInit() {
+    let actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
+        unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
 
     this.getBookmarks();
-    this.setCurrentCategory($stateParams.category);
+    this.setCurrentCategory(this.$stateParams.category);
 
-    $scope.$on('$destroy', unsubscribe);
+    this.$scope.$on('$destroy', unsubscribe);
   }
 
   mapStateToThis(state) {

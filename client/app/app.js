@@ -4,7 +4,6 @@ import 'normalize.css';
 // Angular
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
-import angularComponent from 'angular-component';
 
 // Components
 import Components from './components/components';
@@ -13,13 +12,7 @@ import AppComponent from './app.component';
 // State
 import State from './state/state';
 
-angular.module('app', [
-  uiRouter,
-  State.name,
-  Components.name
-])
-
-.config(($stateProvider, $urlRouterProvider) => {
+const config = ($stateProvider, $urlRouterProvider) => {
   'ngInject';
 
   $urlRouterProvider.otherwise('/');
@@ -27,9 +20,17 @@ angular.module('app', [
   $stateProvider
     //abstract state serves as a PLACEHOLDER or NAMESPACE for application states
     .state('eggly', {
-    url: '',
-    abstract: true
-  });
-})
+      url: '',
+      abstract: true
+    });
 
-.component('app', AppComponent);
+  $urlRouterProvider.otherwise('/');
+}
+
+angular.module('app', [
+    uiRouter,
+    Components.name,
+    State.name
+  ])
+  .config(config)
+  .component('app', AppComponent);

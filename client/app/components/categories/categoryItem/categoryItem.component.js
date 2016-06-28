@@ -2,9 +2,8 @@ import template from './categoryItem.html';
 import './categoryItem.styl';
 
 let categoryItemComponent = {
-  restrict: 'A',
   bindings: {
-    name: '='
+    name: '<'
   },
   template,
   controllerAs: 'categoryItemCtrl'

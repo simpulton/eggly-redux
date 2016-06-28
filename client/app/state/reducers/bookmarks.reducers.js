@@ -33,4 +33,4 @@ let bookmark = (state = initialBookmark, {type, payload}) => {
   }
 }
 
-export default { bookmarks, bookmark };
+export { bookmarks, bookmark };

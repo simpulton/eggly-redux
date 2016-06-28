@@ -2,10 +2,16 @@ class CategoriesController {
   constructor(CategoriesActions, $scope, $ngRedux) {
     'ngInject';
 
-    let unsubscribe = $ngRedux.connect(this.mapStateToThis, CategoriesActions)(this);
+    this.$scope = $scope;
+    this.$ngRedux = $ngRedux;
+    this.CategoriesActions = CategoriesActions;
+  }
+
+  $onInit() {
+    let unsubscribe = this.$ngRedux.connect(this.mapStateToThis, this.CategoriesActions)(this);
     this.getCategories();
 
-    $scope.$on('$destroy', unsubscribe);
+    this.$scope.$on('$destroy', unsubscribe);
   }
 
   mapStateToThis(state) {

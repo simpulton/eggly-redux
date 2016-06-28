@@ -16,4 +16,4 @@ let category = (state = {}, {type, payload}) => {
   }
 }
 
-export default {categories, category};
+export {categories, category};

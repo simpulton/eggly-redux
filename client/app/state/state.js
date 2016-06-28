@@ -5,15 +5,17 @@ import rootReducer from './root.reducer';
 import CategoriesActions from './actions/categories.actions';
 import BookmarksActions from './actions/bookmarks.actions';
 
+const config = ($ngReduxProvider) => {
+  'ngInject';
+
+  $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
+};
+
 let stateModule = angular.module('state', [
   ngRedux
 ])
 
-.config(($ngReduxProvider) => {
-  'ngInject';
-  
-  $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
-})
+.config(config)
 
 .factory('CategoriesActions', CategoriesActions)
 
