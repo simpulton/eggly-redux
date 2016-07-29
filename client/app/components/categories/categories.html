@@ -1,9 +1,12 @@
-<a ui-sref="eggly.categories">
-  <img class="logo" src="assets/img/eggly-logo.png">
-</a>
+<span class="logo" ng-click="categoriesListCtrl.onCategorySelected(null)">
+	<img class="logo" src="assets/img/eggly-logo.png">
+</span>
 <ul class="nav nav-sidebar">
-  <li ui-sref-active="active"
-    ng-repeat="category in categoriesListCtrl.categories">
-    <category-item name="category.name"></category-item>
-  </li>
+	<li class="category-item" ng-class="{'active':categoriesListCtrl.isCurrentCategory(category)}"
+		ng-repeat="category in categoriesListCtrl.categories">
+		<category-item
+			category="category"
+			selected="categoriesListCtrl.onCategorySelected(category)">
+		</category-item>
+	</li>
 </ul>

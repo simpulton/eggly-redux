@@ -1,36 +1,14 @@
 import 'bootstrap-css-only';
 import 'normalize.css';
 
-// Angular
 import angular from 'angular';
-import uiRouter from 'angular-ui-router';
-
-// Components
-import Components from './components/components';
-import AppComponent from './app.component';
-
-// State
-import State from './state/state';
-
-const config = ($stateProvider, $urlRouterProvider) => {
-  'ngInject';
-
-  $urlRouterProvider.otherwise('/');
-
-  $stateProvider
-    //abstract state serves as a PLACEHOLDER or NAMESPACE for application states
-    .state('eggly', {
-      url: '',
-      abstract: true
-    });
-
-  $urlRouterProvider.otherwise('/');
-}
+import appComponent from './app.component';
+import CommonModule from './common/common';
+import ComponentsModule from './components/components';
 
 angular.module('app', [
-    uiRouter,
-    Components.name,
-    State.name
+    CommonModule.name,
+    ComponentsModule.name
   ])
-  .config(config)
-  .component('app', AppComponent);
+  .component('app', appComponent)
+;
