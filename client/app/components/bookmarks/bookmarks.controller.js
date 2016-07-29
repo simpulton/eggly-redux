@@ -1,55 +1,33 @@
 class BookmarksController {
-  constructor($scope, CategoriesModel, BookmarksModel) {
+  constructor(CategoriesActions, BookmarksActions, $ngRedux, $scope) {
     'ngInject';
 
+    this.CategoriesActions = CategoriesActions;
+    this.BookmarksActions = BookmarksActions;
+    this.$ngRedux = $ngRedux;
     this.$scope = $scope;
-    this.CategoriesModel = CategoriesModel;
-    this.BookmarksModel = BookmarksModel;
   }
 
   $onInit() {
-    this.BookmarksModel.getBookmarks()
-      .then(result => this.bookmarks = result);
+    let actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
+        unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
 
-    this.$scope.$on('onCurrentCategoryUpdated', this.reset.bind(this));
-    this.getCurrentCategory = this.CategoriesModel.getCurrentCategory.bind(this.CategoriesModel);
-    this.deleteBookmark = this.BookmarksModel.deleteBookmark;
+    this.getBookmarks();
 
-    this.reset();
+    this.$scope.$on('$destroy', unsubscribe);
   }
 
-  createBookmark() {
-    this.currentBookmark = this.initNewBookmark();
-  }
-
-  editBookmark(bookmark) {
-    this.currentBookmark = bookmark;
-  }
-
-  initNewBookmark() {
+  mapStateToThis(state) {
     return {
-      id: null,
-      title: '',
-      url: '',
-      category: this.CategoriesModel.getCurrentCategory().name
-    }
-  }
-
-  saveBookmark(bookmark) {
-    if (bookmark.id) {
-      this.BookmarksModel.updateBookmark(bookmark);
-    } else {
-      this.BookmarksModel.createBookmark(bookmark);
-    }
+      currentCategory: state.category,
+      currentBookmark: state.bookmark,
+      bookmarks: state.bookmarks
+    };
   }
 
   onSave(bookmark) {
     this.saveBookmark(bookmark);
-    this.reset();
-  }
-
-  reset() {
-    this.currentBookmark = null;
+    this.resetSelectedBookmark();
   }
 }
 

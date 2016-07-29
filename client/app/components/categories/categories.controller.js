@@ -1,22 +1,35 @@
 class CategoriesController {
-  constructor(CategoriesModel) {
+  constructor(CategoriesActions, BookmarksActions, $scope, $ngRedux) {
     'ngInject';
 
-    this.CategoriesModel = CategoriesModel;
+    this.$scope = $scope;
+    this.$ngRedux = $ngRedux;
+    this.CategoriesActions = CategoriesActions;
+    this.BookmarksActions = BookmarksActions;
   }
 
   $onInit() {
-    this.CategoriesModel.getCategories()
-      .then(result => this.categories = result);
+    let actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
+        unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
+    this.getCategories();
+
+    this.$scope.$on('$destroy', unsubscribe);
   }
 
-  onCategorySelected(category) {
-    this.CategoriesModel.setCurrentCategory(category);
+  mapStateToThis(state) {
+    return {
+      categories: state.categories,
+      currentCategory: state.category
+    };
+  }
+
+  setCategory(category) {
+    this.setCurrentCategory(category);
+    this.resetSelectedBookmark();
   }
 
   isCurrentCategory(category) {
-    return this.CategoriesModel.getCurrentCategory() &&
-      this.CategoriesModel.getCurrentCategory().id === category.id;
+    return this.currentCategory && this.currentCategory.id === category.id;
   }
 }
 

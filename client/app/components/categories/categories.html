@@ -1,4 +1,4 @@
-<span class="logo" ng-click="categoriesListCtrl.onCategorySelected(null)">
+<span class="logo" ng-click="categoriesListCtrl.setCategory(null)">
 	<img class="logo" src="assets/img/eggly-logo.png">
 </span>
 <ul class="nav nav-sidebar">
@@ -6,7 +6,7 @@
 		ng-repeat="category in categoriesListCtrl.categories">
 		<category-item
 			category="category"
-			selected="categoriesListCtrl.onCategorySelected(category)">
+			selected="categoriesListCtrl.setCategory(category)">
 		</category-item>
 	</li>
 </ul>
