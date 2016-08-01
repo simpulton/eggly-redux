@@ -25,7 +25,7 @@ const BookmarksModel = ($http, $q, $ngRedux) => {
   };
 
   const findBookmark = (bookmarks, bookmarkId) => {
-    return find(bookmarks, bookmark => bookmark.id === parseInt(bookmarkId, 10));
+    return find(bookmarks, bookmark => bookmark.id == parseInt(bookmarkId, 10));
   };
 
   const getBookmarkById = (bookmarkId) => {
@@ -41,7 +41,7 @@ const BookmarksModel = ($http, $q, $ngRedux) => {
     const { bookmarks } = $ngRedux.getState(),
         hasId = !!bookmark.id;
 
-    if (!hasId) bookmark.id = uniqueId(); // Simulating backend
+    if (!hasId) bookmark.id = uniqueId('100'); // Simulating backend
 
     return hasId ?
         { type: 'EDIT_BOOKMARK', payload: bookmark }
