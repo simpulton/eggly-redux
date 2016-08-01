@@ -1,5 +1,4 @@
 import angular from 'angular';
-import template from './category-item.html';
 import './category-item.styl';
 
 const categoryItemComponent = {
@@ -7,7 +6,12 @@ const categoryItemComponent = {
     category: '<',
     selected: '&'
   },
-  template,
+  template: `
+    <div class="categoryItem"
+      ng-click="categoryItemCtrl.selected({category:categoryItemCtrl.category.name})">
+      {{categoryItemCtrl.category.name}}
+    </div>
+  `,
   controllerAs: 'categoryItemCtrl'
 };
 
