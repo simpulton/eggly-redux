@@ -1,7 +1,16 @@
 import angular from 'angular';
-import categoriesComponent from './categories.component';
-import CategoriesActions from './categories.actions';
+import { CategoriesActions } from './categories.state';
 import CategoryItemModule from './category-item/category-item';
+
+import template from './categories.html';
+import controller from './categories.controller';
+import './categories.styl';
+
+const categoriesComponent = {
+  template,
+  controller,
+  controllerAs: 'categoriesListCtrl'
+};
 
 const CategoriesModule = angular.module('categories', [
       CategoryItemModule.name

@@ -1,5 +1,15 @@
 import angular from 'angular';
-import categoryItemComponent from './category-item.component';
+import template from './category-item.html';
+import './category-item.styl';
+
+const categoryItemComponent = {
+  bindings: {
+    category: '<',
+    selected: '&'
+  },
+  template,
+  controllerAs: 'categoryItemCtrl'
+};
 
 const CategoryItemModule = angular.module('categoryItem', [])
   .component('categoryItem', categoryItemComponent);

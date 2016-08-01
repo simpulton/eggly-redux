@@ -5,12 +5,14 @@ import angular from 'angular';
 import ngRedux from 'ng-redux';
 import thunk from 'redux-thunk';
 
-import appComponent from './app.component';
 import ComponentsModule from './components/components';
 
 import { combineReducers } from 'redux';
-import { categories, category } from './components/categories/categories.reducers';
-import { bookmarks, bookmark } from './components/bookmarks/bookmarks.reducers';
+import { categories, category } from './components/categories/categories.state';
+import { bookmarks, bookmark } from './components/bookmarks/bookmarks.state';
+
+import template from './app.html';
+import './app.styl';
 
 const rootReducer = combineReducers({
   categories,
@@ -25,10 +27,14 @@ const config = ($ngReduxProvider) => {
   $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
 };
 
+const AppComponent = {
+  template
+};
+
 angular.module('app', [
     ngRedux,
     ComponentsModule.name
   ])
   .config(config)
-  .component('app', appComponent)
+  .component('app', AppComponent)
 ;

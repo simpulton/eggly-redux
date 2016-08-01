@@ -1,4 +1,4 @@
-import {bookmarks, bookmark} from './bookmarks.reducers';
+import {bookmarks, bookmark} from './bookmarks.state';
 
 describe('Bookmarks', () => {
   describe('`bookmarks` reducer', () => {

@@ -1,10 +1,10 @@
-import {find, findIndex, uniqueId} from 'lodash';
+import {find, findIndex, reject, uniqueId} from 'lodash';
 
 const URLS = {
   FETCH: 'data/bookmarks.json'
 };
 
-const BookmarksModel = ($http, $q, $ngRedux) => {
+const BookmarksActions = ($http, $q, $ngRedux) => {
   'ngInject';
 
   const extract = result => result.data;
@@ -30,22 +30,22 @@ const BookmarksModel = ($http, $q, $ngRedux) => {
 
   const getBookmarkById = (bookmarkId) => {
     const { bookmarks, bookmark, category } = $ngRedux.getState(),
-        payload = bookmarkId ?
-          findBookmark(bookmarks, bookmarkId)
-          : Object.assign({}, bookmark, {category: category.name});
+      payload = bookmarkId ?
+        findBookmark(bookmarks, bookmarkId)
+        : Object.assign({}, bookmark, {category: category.name});
 
     return { type: 'GET_SELECTED_BOOKMARK', payload};
   };
 
   const saveBookmark = (bookmark) => {
     const { bookmarks } = $ngRedux.getState(),
-        hasId = !!bookmark.id;
+      hasId = !!bookmark.id;
 
     if (!hasId) bookmark.id = uniqueId('100'); // Simulating backend
 
     return hasId ?
-        { type: 'EDIT_BOOKMARK', payload: bookmark }
-        : { type: 'CREATE_BOOKMARK', payload: bookmark };
+    { type: 'EDIT_BOOKMARK', payload: bookmark }
+      : { type: 'CREATE_BOOKMARK', payload: bookmark };
   };
 
   const resetSelectedBookmark = () => {
@@ -63,4 +63,32 @@ const BookmarksModel = ($http, $q, $ngRedux) => {
   return { getBookmarks, deleteBookmark, getBookmarkById, saveBookmark, resetSelectedBookmark, cancel };
 };
 
-export default BookmarksModel;
+const bookmarks = (state = [], {type, payload}) => {
+  switch (type) {
+    case 'GET_BOOKMARKS':
+      return payload;
+    case 'CREATE_BOOKMARK':
+      return [ ...state, payload ];
+    case 'EDIT_BOOKMARK':
+      return state.map(bookmark => bookmark.id === payload.id ? payload : bookmark);
+    case 'DELETE_BOOKMARK':
+      return reject(state, b => b.id == payload.id);
+    default:
+      return state;
+  }
+};
+
+const initialBookmark = { id: null, title: '', url: '', category: null };
+
+const bookmark = (state = initialBookmark, {type, payload}) => {
+  switch (type) {
+    case 'GET_SELECTED_BOOKMARK':
+      return payload || state;
+    case 'RESET_SELECTED_BOOKMARK':
+      return initialBookmark;
+    default:
+      return state;
+  }
+};
+
+export { bookmarks, bookmark, BookmarksActions };

@@ -1,4 +1,4 @@
-import {categories, category} from './categories.reducers';
+import {categories, category} from './categories.state';
 
 describe('Categories', () => {
   describe('`categories` reducer', () => {
