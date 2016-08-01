@@ -2,6 +2,7 @@ import angular from 'angular';
 import { CategoriesActions } from './categories.state';
 import CategoryItemModule from './category-item/category-item';
 
+import template from './categories.html';
 import './categories.styl';
 
 class CategoriesController {
@@ -40,20 +41,7 @@ class CategoriesController {
 }
 
 const categoriesComponent = {
-  template: `
-    <span class="logo" ng-click="categoriesListCtrl.setCategory(null)">
-      <img class="logo" src="assets/img/eggly-logo.png">
-    </span>
-    <ul class="nav nav-sidebar">
-      <li class="category-item" ng-class="{'active':categoriesListCtrl.isCurrentCategory(category)}"
-        ng-repeat="category in categoriesListCtrl.categories">
-        <category-item
-          category="category"
-          selected="categoriesListCtrl.setCategory(category)">
-        </category-item>
-      </li>
-    </ul>
-  `,
+  template,
   controller: CategoriesController,
   controllerAs: 'categoriesListCtrl'
 };
