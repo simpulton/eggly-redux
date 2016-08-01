@@ -1,4 +1,4 @@
-let categories = (state = [], {type, payload}) => {
+const categories = (state = [], {type, payload}) => {
   switch (type) {
     case 'GET_CATEGORIES':
       return payload;
@@ -7,7 +7,7 @@ let categories = (state = [], {type, payload}) => {
   }
 };
 
-let category = (state = {}, {type, payload}) => {
+const category = (state = {}, {type, payload}) => {
   switch (type) {
     case 'SET_CURRENT_CATEGORY':
       return payload || { name: undefined };

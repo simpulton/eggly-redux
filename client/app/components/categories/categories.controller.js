@@ -9,7 +9,7 @@ class CategoriesController {
   }
 
   $onInit() {
-    let actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
+    const actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
         unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
     this.getCategories();
 

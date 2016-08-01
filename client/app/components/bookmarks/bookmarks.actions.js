@@ -1,17 +1,17 @@
-import {find, findIndex} from 'lodash';
+import {find, findIndex, uniqueId} from 'lodash';
 
 const URLS = {
   FETCH: 'data/bookmarks.json'
 };
 
-let BookmarksModel = ($http, $q, $ngRedux) => {
+const BookmarksModel = ($http, $q, $ngRedux) => {
   'ngInject';
 
-  let extract = result => result.data;
+  const extract = result => result.data;
 
-  let getBookmarks = () => {
+  const getBookmarks = () => {
     return (dispatch, getState) => {
-      let { bookmarks } = getState();
+      const { bookmarks } = getState();
 
       if (bookmarks.length) {
         return $q.when(bookmarks)
@@ -24,12 +24,12 @@ let BookmarksModel = ($http, $q, $ngRedux) => {
     };
   };
 
-  let findBookmark = (bookmarks, bookmarkId) => {
+  const findBookmark = (bookmarks, bookmarkId) => {
     return find(bookmarks, bookmark => bookmark.id === parseInt(bookmarkId, 10));
   };
 
-  let getBookmarkById = (bookmarkId) => {
-    let { bookmarks, bookmark, category } = $ngRedux.getState(),
+  const getBookmarkById = (bookmarkId) => {
+    const { bookmarks, bookmark, category } = $ngRedux.getState(),
         payload = bookmarkId ?
           findBookmark(bookmarks, bookmarkId)
           : Object.assign({}, bookmark, {category: category.name});
@@ -37,28 +37,26 @@ let BookmarksModel = ($http, $q, $ngRedux) => {
     return { type: 'GET_SELECTED_BOOKMARK', payload};
   };
 
-  let saveBookmark = (bookmark) => {
-    let { bookmarks } = $ngRedux.getState(),
+  const saveBookmark = (bookmark) => {
+    const { bookmarks } = $ngRedux.getState(),
         hasId = !!bookmark.id;
 
-    if (!hasId) bookmark.id = bookmarks.length;
+    if (!hasId) bookmark.id = uniqueId(); // Simulating backend
 
     return hasId ?
         { type: 'EDIT_BOOKMARK', payload: bookmark }
         : { type: 'CREATE_BOOKMARK', payload: bookmark };
   };
 
-  let resetSelectedBookmark = () => {
+  const resetSelectedBookmark = () => {
     return { type: 'RESET_SELECTED_BOOKMARK' };
   };
 
-  let deleteBookmark = bookmark => {
+  const deleteBookmark = bookmark => {
     return { type: 'DELETE_BOOKMARK', payload: bookmark };
   };
 
-  let cancel = () => {
-    returnToBookmarks();
-
+  const cancel = () => {
     return resetSelectedBookmark();
   };
 

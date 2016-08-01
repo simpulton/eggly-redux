@@ -4,14 +4,14 @@ const URLS = {
   FETCH: 'data/categories.json'
 };
 
-let CategoriesModel = ($http, $q, $ngRedux) => {
+const CategoriesModel = ($http, $q, $ngRedux) => {
   'ngInject';
 
-  let extract = result => result.data;
+  const extract = result => result.data;
 
-  let getCategories = () => {
+  const getCategories = () => {
     return (dispatch, getState) => {
-      let { categories } = getState();
+      const { categories } = getState();
 
       if (categories.length) {
         return $q.when(categories)
@@ -24,12 +24,12 @@ let CategoriesModel = ($http, $q, $ngRedux) => {
     };
   };
 
-  let findCategory = (categories, categoryName) => {
+  const findCategory = (categories, categoryName) => {
     return find(categories, c => c.name == categoryName);
   };
 
-  let setCurrentCategory = (categoryName) => {
-    let { categories } = $ngRedux.getState();
+  const setCurrentCategory = (categoryName) => {
+    const { categories } = $ngRedux.getState();
     return { type: 'SET_CURRENT_CATEGORY', payload: findCategory(categories, categoryName) };
   };
 

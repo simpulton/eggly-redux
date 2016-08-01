@@ -1,6 +1,6 @@
 import {clone, reject} from 'lodash';
 
-let bookmarks = (state = [], {type, payload}) => {
+const bookmarks = (state = [], {type, payload}) => {
   switch (type) {
     case 'GET_BOOKMARKS':
       return payload;
@@ -17,7 +17,7 @@ let bookmarks = (state = [], {type, payload}) => {
 
 const initialBookmark = { id: null, title: '', url: '', category: null };
 
-let bookmark = (state = initialBookmark, {type, payload}) => {
+const bookmark = (state = initialBookmark, {type, payload}) => {
   switch (type) {
     case 'GET_SELECTED_BOOKMARK':
       return payload || state;
