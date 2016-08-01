@@ -7,9 +7,7 @@ const URLS = {
 let BookmarksModel = ($http, $q, $ngRedux) => {
   'ngInject';
 
-  let extract = (result) => {
-    return result.data;
-  };
+  let extract = result => result.data;
 
   let getBookmarks = () => {
     return (dispatch, getState) => {
@@ -27,9 +25,7 @@ let BookmarksModel = ($http, $q, $ngRedux) => {
   };
 
   let findBookmark = (bookmarks, bookmarkId) => {
-    return find(bookmarks, (bookmark) => {
-      return bookmark.id === parseInt(bookmarkId, 10);
-    });
+    return find(bookmarks, bookmark => bookmark.id === parseInt(bookmarkId, 10));
   };
 
   let getBookmarkById = (bookmarkId) => {

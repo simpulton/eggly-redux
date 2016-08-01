@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { categories, category } from './reducers/categories.reducers';
-import { bookmarks, bookmark } from './reducers/bookmarks.reducers';
+import { categories, category } from './categories.reducers';
+import { bookmarks, bookmark } from './bookmarks.reducers';
 
 let rootReducer = combineReducers({
   categories,

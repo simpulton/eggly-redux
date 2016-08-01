@@ -1,7 +1,7 @@
 import angular from 'angular';
 import ngRedux from 'ng-redux';
 import thunk from 'redux-thunk';
-import rootReducer from './root.reducer';
+import rootReducer from './reducers/root.reducer';
 import CategoriesActions from './actions/categories.actions';
 import BookmarksActions from './actions/bookmarks.actions';
 
@@ -11,14 +11,9 @@ const config = ($ngReduxProvider) => {
   $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
 };
 
-let stateModule = angular.module('state', [
-  ngRedux
-])
+let StateModule = angular.module('state', [ngRedux])
+  .config(config)
+  .factory('CategoriesActions', CategoriesActions)
+  .factory('BookmarksActions', BookmarksActions);
 
-.config(config)
-
-.factory('CategoriesActions', CategoriesActions)
-
-.factory('BookmarksActions', BookmarksActions);
-
-export default stateModule;
+export default StateModule;

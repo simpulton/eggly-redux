@@ -7,18 +7,13 @@ let bookmarks = (state = [], {type, payload}) => {
     case 'CREATE_BOOKMARK':
       return [ ...state, payload ];
     case 'EDIT_BOOKMARK':
-      return state.map(bookmark => {
-        return bookmark.id === payload.id ? payload : bookmark;
-      });
+      return state.map(bookmark => bookmark.id === payload.id ? payload : bookmark);
     case 'DELETE_BOOKMARK':
-      return reject(state, (b) => {
-        return b.id == payload.id;
-      });
+      return reject(state, b => b.id == payload.id);
     default:
       return state;
   }
 };
-
 
 const initialBookmark = { id: null, title: '', url: '', category: null };
 

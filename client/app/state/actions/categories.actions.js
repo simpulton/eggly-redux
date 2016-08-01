@@ -7,9 +7,7 @@ const URLS = {
 let CategoriesModel = ($http, $q, $ngRedux) => {
   'ngInject';
 
-  let extract = (result) => {
-    return result.data;
-  };
+  let extract = result => result.data;
 
   let getCategories = () => {
     return (dispatch, getState) => {
@@ -27,9 +25,7 @@ let CategoriesModel = ($http, $q, $ngRedux) => {
   };
 
   let findCategory = (categories, categoryName) => {
-    return find(categories, (c) => {
-      return c.name == categoryName;
-    });
+    return find(categories, c => c.name == categoryName);
   };
 
   let setCurrentCategory = (categoryName) => {
