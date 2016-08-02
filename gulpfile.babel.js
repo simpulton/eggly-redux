@@ -6,19 +6,19 @@ import path     from 'path';
 import sync     from 'run-sequence';
 import serve    from 'browser-sync';
 
-let reload = () => serve.reload();
-let root = 'client';
+const reload = () => serve.reload();
+const root = 'client';
 
 // helper method for resolving paths
-let resolveToApp = (glob) => {
+const resolveToApp = (glob) => {
   glob = glob || '';
   return path.join(root, 'app', glob); // app/{glob}
 };
 
 // map of all paths
-let paths = {
+const paths = {
   js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
-  styl: resolveToApp('**/*.styl'), // stylesheets
+  css: resolveToApp('**/*.css'), // stylesheets
   html: [
     resolveToApp('**/*.html'),
     path.join(root, 'index.html')
@@ -43,7 +43,7 @@ gulp.task('serve', () => {
 });
 
 gulp.task('watch', () => {
-  let allPaths = [].concat([paths.js], paths.html, [paths.styl]);
+  const allPaths = [].concat([paths.js], paths.html, [paths.css]);
   gulp.watch(allPaths, ['webpack', reload]);
 });
 
