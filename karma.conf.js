@@ -28,9 +28,6 @@ module.exports = function(config) {
           test: /\.html/,
           loader: 'raw'
         }, {
-          test: /\.styl$/,
-          loader: 'style!css'
-        }, {
           test: /\.css$/,
           loader: 'style!css'
         }]
