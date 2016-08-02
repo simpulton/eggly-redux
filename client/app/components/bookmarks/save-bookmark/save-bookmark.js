@@ -1,6 +1,6 @@
 import angular from 'angular';
 import template from './save-bookmark.html';
-import './save-bookmark.styl';
+import './save-bookmark.css';
 
 class SaveController {
   $onChanges() {

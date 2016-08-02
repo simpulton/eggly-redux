@@ -1,6 +1,6 @@
 import angular from 'angular';
 import template from './category-item.html';
-import './category-item.styl';
+import './category-item.css';
 
 const categoryItemComponent = {
   bindings: {

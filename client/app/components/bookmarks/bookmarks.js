@@ -3,7 +3,7 @@ import { BookmarksActions } from './bookmarks.state';
 import SaveBookmarksModule from './save-bookmark/save-bookmark';
 
 import template from './bookmarks.html';
-import './bookmarks.styl';
+import './bookmarks.css';
 
 class BookmarksController {
   constructor(CategoriesActions, BookmarksActions, $ngRedux, $scope) {

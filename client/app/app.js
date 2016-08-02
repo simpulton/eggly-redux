@@ -11,7 +11,7 @@ import { combineReducers } from 'redux';
 import { categories, category } from './components/categories/categories.state';
 import { bookmarks, bookmark } from './components/bookmarks/bookmarks.state';
 
-import './app.styl';
+import './app.css';
 
 const rootReducer = combineReducers({
   categories,

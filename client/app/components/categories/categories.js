@@ -3,7 +3,7 @@ import { CategoriesActions } from './categories.state';
 import CategoryItemModule from './category-item/category-item';
 
 import template from './categories.html';
-import './categories.styl';
+import './categories.css';
 
 class CategoriesController {
   constructor(CategoriesActions, BookmarksActions, $scope, $ngRedux) {
