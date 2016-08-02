@@ -1,0 +1,9 @@
+.bookmarks {
+  padding-top: 96px;
+  padding-left: 24px;
+}
+
+.bookmarks .active span,
+.bookmarks .active > a {
+  color: #5bc0de;
+}

@@ -29,7 +29,7 @@ module.exports = function(config) {
           loader: 'raw'
         }, {
           test: /\.styl$/,
-          loader: 'style!css!stylus'
+          loader: 'style!css'
         }, {
           test: /\.css$/,
           loader: 'style!css'

@@ -1,7 +1,25 @@
 import angular from 'angular';
-import saveBookmarkComponent from './save-bookmark.component';
+import template from './save-bookmark.html';
+import './save-bookmark.css';
+
+class SaveController {
+  $onChanges() {
+    this.editedBookmark = Object.assign({}, this.bookmark);
+  }
+}
+
+const SaveBookmarkComponent = {
+  bindings: {
+    bookmark: '<',
+    save: '&',
+    cancel: '&'
+  },
+  template,
+  controller: SaveController,
+  controllerAs: 'saveBookmarkCtrl'
+};
 
 const SaveBookmarkModule = angular.module('saveBookmark', [])
-  .component('saveBookmark', saveBookmarkComponent);
+  .component('saveBookmark', SaveBookmarkComponent);
 
 export default SaveBookmarkModule;

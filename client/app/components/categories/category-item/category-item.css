@@ -1,0 +1,16 @@
+.category-item {
+  color: #5bc0de;
+  font-size: 30px;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.category-item:hover,
+.category-item:focus {
+  text-decoration: none;
+  background-color: #d5dbd8;
+  color: #2b2828;
+}
