@@ -5,23 +5,11 @@ import angular from 'angular';
 import CommonModule from './common/common';
 import ComponentsModule from './components/components';
 
+import template from './app.html';
 import './app.css';
 
 const AppComponent = {
-  template: `
-    <div class="app">
-    	<div class="container-fluid">
-    		<div class="row">
-    			<div class="col-sm-3 col-md-2 sidebar">
-    				<categories></categories>
-    			</div>
-    			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    				<bookmarks></bookmarks>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-  `
+  template
 };
 
 angular.module('app', [
