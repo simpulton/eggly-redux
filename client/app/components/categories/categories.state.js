@@ -36,10 +36,7 @@ const CategoriesActions = ($http, $q, $ngRedux) => {
   return { getCategories, setCurrentCategory };
 };
 
-
-const initialCategories = [{id:1000, name: 'FOO CATEGORY'}];
-
-const categories = (state = initialCategories, { type, payload }) => {
+const categories = (state = [], { type, payload }) => {
   switch (type) {
     case 'SET_CATEGORIES':
       return payload;
