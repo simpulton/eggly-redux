@@ -44,7 +44,7 @@ const BookmarksActions = ($http, $q, $ngRedux) => {
     if (!hasId) bookmark.id = uniqueId('100'); // Simulating backend
 
     return hasId ?
-    { type: 'EDIT_BOOKMARK', payload: bookmark }
+      { type: 'EDIT_BOOKMARK', payload: bookmark }
       : { type: 'CREATE_BOOKMARK', payload: bookmark };
   };
 
