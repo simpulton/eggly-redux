@@ -1,4 +1,4 @@
-import {find} from 'lodash';
+import { find } from 'lodash';
 
 const URLS = {
   FETCH: 'data/categories.json'
@@ -15,11 +15,11 @@ const CategoriesActions = ($http, $q, $ngRedux) => {
 
       if (categories.length) {
         return $q.when(categories)
-          .then(() => dispatch({ type: 'GET_CATEGORIES', payload: categories }));
+          .then(() => dispatch({ type: 'SET_CATEGORIES', payload: categories }));
       } else {
         return $http.get(URLS.FETCH)
           .then(extract)
-          .then(data => dispatch({ type: 'GET_CATEGORIES', payload: data }));
+          .then(data => dispatch({ type: 'SET_CATEGORIES', payload: data }));
       }
     };
   };
@@ -36,16 +36,16 @@ const CategoriesActions = ($http, $q, $ngRedux) => {
   return { getCategories, setCurrentCategory };
 };
 
-const categories = (state = [], {type, payload}) => {
+const categories = (state = [], { type, payload }) => {
   switch (type) {
-    case 'GET_CATEGORIES':
+    case 'SET_CATEGORIES':
       return payload;
     default:
       return state;
   }
 };
 
-const category = (state = {}, {type, payload}) => {
+const category = (state = {}, { type, payload }) => {
   switch (type) {
     case 'SET_CURRENT_CATEGORY':
       return payload || { name: undefined };
@@ -54,4 +54,4 @@ const category = (state = {}, {type, payload}) => {
   }
 };
 
-export {categories, category, CategoriesActions};
+export { categories, category, CategoriesActions };

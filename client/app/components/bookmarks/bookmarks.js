@@ -6,22 +6,22 @@ import template from './bookmarks.html';
 import './bookmarks.css';
 
 class BookmarksController {
-  constructor(CategoriesActions, BookmarksActions, $ngRedux, $scope) {
+  constructor(CategoriesActions, BookmarksActions, $ngRedux) {
     'ngInject';
 
     this.CategoriesActions = CategoriesActions;
     this.BookmarksActions = BookmarksActions;
     this.$ngRedux = $ngRedux;
-    this.$scope = $scope;
   }
 
   $onInit() {
-    const actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
-      unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
-
+    const actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions);
+    this.unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
     this.getBookmarks();
+  }
 
-    this.$scope.$on('$destroy', unsubscribe);
+  $onDestroy() {
+    this.unsubscribe();
   }
 
   mapStateToThis(state) {
@@ -45,8 +45,8 @@ const bookmarksComponent = {
 };
 
 const BookmarksModule = angular.module('bookmarks', [
-      SaveBookmarksModule.name
-    ])
+    SaveBookmarksModule.name
+  ])
     .factory('BookmarksActions', BookmarksActions)
     .component('bookmarks', bookmarksComponent)
   ;

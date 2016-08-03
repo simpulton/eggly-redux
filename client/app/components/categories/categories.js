@@ -6,21 +6,22 @@ import template from './categories.html';
 import './categories.css';
 
 class CategoriesController {
-  constructor(CategoriesActions, BookmarksActions, $scope, $ngRedux) {
+  constructor(CategoriesActions, BookmarksActions, $ngRedux) {
     'ngInject';
 
-    this.$scope = $scope;
     this.$ngRedux = $ngRedux;
     this.CategoriesActions = CategoriesActions;
     this.BookmarksActions = BookmarksActions;
   }
 
   $onInit() {
-    const actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions),
-      unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
+    const actions = Object.assign({}, this.BookmarksActions, this.CategoriesActions);
+    this.unsubscribe = this.$ngRedux.connect(this.mapStateToThis, actions)(this);
     this.getCategories();
+  }
 
-    this.$scope.$on('$destroy', unsubscribe);
+  $onDestroy() {
+    this.unsubscribe();
   }
 
   mapStateToThis(state) {
@@ -47,8 +48,8 @@ const categoriesComponent = {
 };
 
 const CategoriesModule = angular.module('categories', [
-      CategoryItemModule.name
-    ])
+    CategoryItemModule.name
+  ])
     .factory('CategoriesActions', CategoriesActions)
     .component('categories', categoriesComponent)
   ;
