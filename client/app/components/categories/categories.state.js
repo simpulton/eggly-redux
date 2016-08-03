@@ -1,4 +1,4 @@
-import {find} from 'lodash';
+import { find } from 'lodash';
 
 const URLS = {
   FETCH: 'data/categories.json'
@@ -36,7 +36,7 @@ const CategoriesActions = ($http, $q, $ngRedux) => {
   return { getCategories, setCurrentCategory };
 };
 
-const categories = (state = [], {type, payload}) => {
+const categories = (state = [], { type, payload }) => {
   switch (type) {
     case 'GET_CATEGORIES':
       return payload;
@@ -45,7 +45,7 @@ const categories = (state = [], {type, payload}) => {
   }
 };
 
-const category = (state = {}, {type, payload}) => {
+const category = (state = {}, { type, payload }) => {
   switch (type) {
     case 'SET_CURRENT_CATEGORY':
       return payload || { name: undefined };
@@ -54,4 +54,4 @@ const category = (state = {}, {type, payload}) => {
   }
 };
 
-export {categories, category, CategoriesActions};
+export { categories, category, CategoriesActions };
