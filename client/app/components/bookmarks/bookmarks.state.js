@@ -56,11 +56,7 @@ const BookmarksActions = ($http, $q, $ngRedux) => {
     return { type: 'DELETE_BOOKMARK', payload: bookmark };
   };
 
-  const cancel = () => {
-    return resetSelectedBookmark();
-  };
-
-  return { getBookmarks, deleteBookmark, getBookmarkById, saveBookmark, resetSelectedBookmark, cancel };
+  return { getBookmarks, deleteBookmark, getBookmarkById, saveBookmark, resetSelectedBookmark };
 };
 
 const bookmarks = (state = [], { type, payload }) => {
