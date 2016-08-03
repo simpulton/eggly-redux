@@ -15,11 +15,11 @@ const CategoriesActions = ($http, $q, $ngRedux) => {
 
       if (categories.length) {
         return $q.when(categories)
-          .then(() => dispatch({ type: 'GET_CATEGORIES', payload: categories }));
+          .then(() => dispatch({ type: 'SET_CATEGORIES', payload: categories }));
       } else {
         return $http.get(URLS.FETCH)
           .then(extract)
-          .then(data => dispatch({ type: 'GET_CATEGORIES', payload: data }));
+          .then(data => dispatch({ type: 'SET_CATEGORIES', payload: data }));
       }
     };
   };
@@ -36,9 +36,12 @@ const CategoriesActions = ($http, $q, $ngRedux) => {
   return { getCategories, setCurrentCategory };
 };
 
-const categories = (state = [], { type, payload }) => {
+
+const initialCategories = [{id:1000, name: 'FOO CATEGORY'}];
+
+const categories = (state = initialCategories, { type, payload }) => {
   switch (type) {
-    case 'GET_CATEGORIES':
+    case 'SET_CATEGORIES':
       return payload;
     default:
       return state;
