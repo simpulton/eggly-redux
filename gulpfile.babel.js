@@ -31,6 +31,10 @@ const paths = {
 gulp.task('webpack', () => {
   return gulp.src(paths.entry)
     .pipe(webpack(require('./webpack.config')))
+    .on('error', function(e) {
+      console.error(e);
+      this.emit('end');
+    })
     .pipe(gulp.dest(paths.output));
 });
 
