@@ -1,34 +1,41 @@
 import angular from 'angular';
 import CategoryItemModule from './category-item/category-item';
 
-import { category, CategoriesActions } from './categories.state';
+import { CategoriesActions } from './categories.state';
 
 import template from './categories.html';
 import './categories.css';
 
 class CategoriesController {
-  constructor($ngRedux, CategoriesActions) {
+  constructor($ngRedux, CategoriesActions, BookmarksActions) {
     'ngInject';
 
     this.store = $ngRedux;
     this.CategoriesActions = CategoriesActions;
+    this.BookmarksActions = BookmarksActions;
   }
 
   $onInit() {
-    this.store.subscribe(() => {
-      this.categories = this.store.getState().categories;
-      this.currentCategory = this.store.getState().category;
-    });
+    const actions = Object.assign({}, this.CategoriesActions, this.BookmarksActions);
+    this.unsubscribe = this.store.connect(this.mapStateToThis, actions)(this);
 
-    this.store.dispatch(
-      this.CategoriesActions.getCategories()
-    );
+    this.getCategories();
+  }
+
+  $onDestroy() {
+    this.unsubscribe();
+  }
+
+  mapStateToThis(state) {
+    return {
+      categories: state.categories,
+      currentCategory: state.category
+    }
   }
 
   onCategorySelected(category) {
-    this.store.dispatch(
-      this.CategoriesActions.selectCategory(category)
-    );
+    this.selectCategory(category);
+    this.resetSelectedBookmark();
   }
 
   isCurrentCategory(category) {

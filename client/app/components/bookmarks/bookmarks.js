@@ -14,39 +14,21 @@ class BookmarksController {
   }
 
   $onInit() {
-    this.store.subscribe(() => {
-      this.bookmarks = this.store.getState().bookmarks;
-      this.currentBookmark = this.store.getState().bookmark;
-      this.currentCategory = this.store.getState().category;
-    });
+    this.unsubscribe = this.store.connect(this.mapStateToThis, this.BookmarksActions)(this);
 
-    this.store.dispatch(
-      this.BookmarksActions.getBookmarks()
-    );
+    this.getBookmarks();
   }
 
-  selectBookmark(bookmark) {
-    this.store.dispatch(
-      this.BookmarksActions.selectBookmark(bookmark)
-    )
+  $onDestroy() {
+    this.unsubscribe();
   }
 
-  saveBookmark(bookmark) {
-    this.store.dispatch(
-      this.BookmarksActions.saveBookmark(bookmark)
-    )
-  }
-
-  deleteBookmark(bookmark) {
-    this.store.dispatch(
-      this.BookmarksActions.deleteBookmark(bookmark)
-    )
-  }
-
-  resetSelectedBookmark() {
-    this.store.dispatch(
-      this.BookmarksActions.resetSelectedBookmark()
-    )
+  mapStateToThis(state) {
+    return {
+      bookmarks: state.bookmarks,
+      currentBookmark: state.bookmark,
+      currentCategory: state.category
+    }
   }
 
   onSave(bookmark) {
