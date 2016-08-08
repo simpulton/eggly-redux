@@ -17,10 +17,12 @@ const AppComponent = {
   template
 };
 
-angular.module('app', [
+let appModule = angular.module('app', [
     CommonModule.name,
     ComponentsModule.name
   ])
   .value('store', store)
   .component('app', AppComponent)
 ;
+
+export default appModule;
