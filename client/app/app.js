@@ -27,7 +27,7 @@ const AppComponent = {
   template
 };
 
-angular.module('app', [
+let appModule = angular.module('app', [
     CommonModule.name,
     ComponentsModule.name,
     ngRedux
@@ -35,3 +35,5 @@ angular.module('app', [
   .config(config)
   .component('app', AppComponent)
 ;
+
+export default appModule;
