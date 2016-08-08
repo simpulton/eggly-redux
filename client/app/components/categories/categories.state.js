@@ -44,7 +44,7 @@ export const categories = (state = initialCategories, {type, payload}) => {
 export const category = (state = {}, {type, payload}) => {
   switch (type) {
     case GET_CURRENT_CATEGORY:
-      return payload || state;
+      return payload || { name: undefined };
     default:
       return state;
   }

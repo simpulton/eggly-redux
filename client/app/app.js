@@ -5,16 +5,22 @@ import angular from 'angular';
 import CommonModule from './common/common';
 import ComponentsModule from './components/components';
 
-import { categories, initialCategories } from './components/categories/categories.state';
+import { categories, category } from './components/categories/categories.state';
+import { combineReducers } from 'redux';
 import ngRedux from 'ng-redux';
 
 import template from './app.html';
 import './app.css';
 
+const rootReducer = combineReducers({
+  categories,
+  category
+});
+
 const config = $ngReduxProvider => {
   'ngInject';
 
-  $ngReduxProvider.createStoreWith(categories, [], [], initialCategories);
+  $ngReduxProvider.createStoreWith(rootReducer, []);
 };
 
 const AppComponent = {
