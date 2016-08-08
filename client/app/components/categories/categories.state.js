@@ -7,9 +7,28 @@ export const GET_CURRENT_CATEGORY = 'GET_CURRENT_CATEGORY';
 //-------------------------------------------------------------------
 // Actions
 //-------------------------------------------------------------------
-export const CategoriesActions = () => {
-  const getCategories = categories => {
-    return { type: GET_CATEGORIES, payload: categories };
+const URLS = {
+  FETCH: 'data/categories.json'
+};
+
+export const CategoriesActions = ($http, $q) => {
+  'ngInject';
+
+  const extract = result => result.data;
+
+  const getCategories = () => {
+    return (dispatch, getState) => {
+      const { categories } = getState();
+
+      if(categories.length) {
+        return $q.when(categories)
+          .then(() => dispatch({ type: GET_CATEGORIES, payload: categories }));
+      } else {
+        return $http.get(URLS.FETCH)
+          .then(extract)
+          .then(data => dispatch({ type: GET_CATEGORIES, payload: data }));
+      }
+    }
   };
 
   const selectCategory = category => {
@@ -25,14 +44,7 @@ export const CategoriesActions = () => {
 //-------------------------------------------------------------------
 // Reducers
 //-------------------------------------------------------------------
-export const initialCategories = [
-  {"id": 0, "name": "Development"},
-  {"id": 1, "name": "Design"},
-  {"id": 2, "name": "Exercise"},
-  {"id": 3, "name": "Humor"}
-];
-
-export const categories = (state = initialCategories, {type, payload}) => {
+export const categories = (state = [], {type, payload}) => {
   switch (type) {
     case GET_CATEGORIES:
       return payload || state;

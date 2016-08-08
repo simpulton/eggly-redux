@@ -6,6 +6,7 @@ import CommonModule from './common/common';
 import ComponentsModule from './components/components';
 
 import { combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 import ngRedux from 'ng-redux';
 import { categories, category } from './components/categories/categories.state';
 import { bookmarks, bookmark } from './components/bookmarks/bookmarks.state';
@@ -23,7 +24,7 @@ const rootReducer = combineReducers({
 const config = $ngReduxProvider => {
   'ngInject';
 
-  $ngReduxProvider.createStoreWith(rootReducer, []);
+  $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
 };
 
 const AppComponent = {

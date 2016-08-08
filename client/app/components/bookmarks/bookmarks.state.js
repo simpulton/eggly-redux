@@ -13,11 +13,28 @@ export const RESET_SELECTED_BOOKMARK = 'RESET_SELECTED_BOOKMARK';
 //-------------------------------------------------------------------
 // Actions
 //-------------------------------------------------------------------
-export const BookmarksActions = ($ngRedux) => {
+const URLS = {
+  FETCH: 'data/bookmarks.json'
+};
+
+export const BookmarksActions = ($ngRedux, $http, $q) => {
   'ngInject';
 
-  const getBookmarks = bookmarks => {
-    return { type: GET_BOOKMARKS, payload: bookmarks };
+  const extract = result => result.data;
+
+  const getBookmarks = () => {
+    return(dispatch, getState) => {
+      const { bookmarks } = getState();
+
+      if(bookmarks.length) {
+        return $q.when(bookmarks)
+          .then(() => dispatch({ type: GET_BOOKMARKS, payload: bookmarks }));
+      } else {
+        return $http.get(URLS.FETCH)
+          .then(extract)
+          .then((data) => dispatch({ type: GET_BOOKMARKS, payload: data }));
+      }
+    }
   };
 
   const selectBookmark = (bookmark = initialBookmark) => {
@@ -56,19 +73,7 @@ export const BookmarksActions = ($ngRedux) => {
 //-------------------------------------------------------------------
 // Reducers
 //-------------------------------------------------------------------
-const initialBookmarks = [
-  {"id":1, "title": "AngularJS", "url": "http://angularjs.org", "category": "Development" },
-  {"id":2, "title": "Egghead.io", "url": "http://egghead.io", "category": "Development" },
-  {"id":3, "title": "A List Apart", "url": "http://alistapart.com/", "category": "Design" },
-  {"id":4, "title": "One Page Love", "url": "http://onepagelove.com/", "category": "Design" },
-  {"id":6, "title": "MobilityWOD", "url": "http://www.mobilitywod.com/", "category": "Exercise" },
-  {"id":7, "title": "Robb Wolf", "url": "http://robbwolf.com/", "category": "Exercise" },
-  {"id":8, "title": "Senor Gif", "url": "http://memebase.cheezburger.com/senorgif", "category": "Humor" },
-  {"id":9, "title": "Wimp", "url": "http://wimp.com", "category": "Humor" },
-  {"id":10, "title": "ViralViralVideos", "url": "http://viralviralvideos.com", "category": "Humor" }
-];
-
-export const bookmarks = (state = initialBookmarks, {type, payload}) => {
+export const bookmarks = (state = [], {type, payload}) => {
   switch (type) {
     case GET_BOOKMARKS:
       return payload || state;
