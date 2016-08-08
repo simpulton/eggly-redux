@@ -15,8 +15,10 @@ class CategoriesController {
   }
 
   $onInit() {
+    this.store.subscribe(() => {
+      this.categories = this.store.getState();
+    });
     this.store.dispatch({ type: GET_CATEGORIES });
-    this.categories = this.store.getState();
 
     this.$timeout(() => {
       const payload = [
@@ -25,7 +27,6 @@ class CategoriesController {
       ];
 
       this.store.dispatch({ type: GET_CATEGORIES, payload });
-      this.categories = this.store.getState();
     }, 3000);
 
     this.$timeout(() => {
@@ -34,7 +35,6 @@ class CategoriesController {
       ];
 
       this.store.dispatch({ type: GET_CATEGORIES, payload });
-      this.categories = this.store.getState();
     }, 6000);
   }
 
