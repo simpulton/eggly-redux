@@ -1,45 +1,52 @@
 import angular from 'angular';
 import CategoryItemModule from './category-item/category-item';
 
-import { GET_CATEGORIES, category, GET_CURRENT_CATEGORY } from './categories.state';
+import { category, CategoriesActions } from './categories.state';
 
 import template from './categories.html';
 import './categories.css';
 
 class CategoriesController {
-  constructor($timeout, store) {
+  constructor($timeout, store, CategoriesActions) {
     'ngInject';
 
     this.$timeout = $timeout;
     this.store = store;
+    this.CategoriesActions = CategoriesActions;
   }
 
   $onInit() {
     this.store.subscribe(() => {
       this.categories = this.store.getState();
     });
-    this.store.dispatch({ type: GET_CATEGORIES });
+    this.store.dispatch(
+      this.CategoriesActions.getCategories()
+    );
 
     this.$timeout(() => {
-      const payload = [
+      const categories = [
         { id: 0, name: 'Redux' },
         { id: 1, name: 'Angular' }
       ];
 
-      this.store.dispatch({ type: GET_CATEGORIES, payload });
+      this.store.dispatch(
+        this.CategoriesActions.getCategories(categories)
+      );
     }, 3000);
 
     this.$timeout(() => {
-      const payload = [
+      const categories = [
         { id: 0, name: 'Un Oh!' }
       ];
 
-      this.store.dispatch({ type: GET_CATEGORIES, payload });
+      this.store.dispatch(
+        this.CategoriesActions.getCategories(categories)
+      );
     }, 6000);
   }
 
   onCategorySelected(currentCategory) {
-    this.currentCategory = category(this.currentCategory, { type: GET_CURRENT_CATEGORY, payload: currentCategory });
+    this.currentCategory = category(this.currentCategory, this.CategoriesActions.selectCategory(currentCategory));
   }
 
   isCurrentCategory(category) {
@@ -57,6 +64,7 @@ const CategoriesComponent = {
 const CategoriesModule = angular.module('categories', [
       CategoryItemModule.name
     ])
+    .factory('CategoriesActions', CategoriesActions)
     .component('categories', CategoriesComponent)
   ;
 
