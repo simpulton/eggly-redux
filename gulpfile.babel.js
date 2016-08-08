@@ -1,10 +1,12 @@
 'use strict';
 
 import gulp     from 'gulp';
-import webpack  from 'webpack-stream';
+import webpack  from 'webpack';
 import path     from 'path';
 import sync     from 'run-sequence';
 import serve    from 'browser-sync';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 
 const reload = () => serve.reload();
 const root = 'client';
@@ -23,34 +25,31 @@ const paths = {
     resolveToApp('**/*.html'),
     path.join(root, 'index.html')
   ],
-  entry: path.join(root, 'app/app.js'),
-  output: root
+  output: path.resolve(__dirname, root)
 };
 
-// use webpack.config.js to build modules
-gulp.task('webpack', () => {
-  return gulp.src(paths.entry)
-    .pipe(webpack(require('./webpack.config')))
-    .on('error', function(e) {
-      console.error(e);
-      this.emit('end');
-    })
-    .pipe(gulp.dest(paths.output));
-});
-
 gulp.task('serve', () => {
+  let config = require('./webpack.config');
+  const compiler = webpack(config);
+
   serve({
     port: process.env.PORT || 3000,
     open: false,
-    server: { baseDir: root }
+    server: { baseDir: root },
+    middleware: [
+      webpackDevMiddleware(compiler, {
+        stats: false
+      }),
+      webpackHotMiddleware(compiler)
+    ]
   });
 });
 
 gulp.task('watch', () => {
   const allPaths = [].concat([paths.js], paths.html, [paths.css]);
-  gulp.watch(allPaths, ['webpack', reload]);
+  gulp.watch(allPaths, ['serve', reload]);
 });
 
 gulp.task('default', (done) => {
-  sync('webpack', 'serve', 'watch', done);
+  sync('serve', done);
 });
