@@ -1,64 +1,57 @@
 import angular from 'angular';
 import SaveBookmarksModule from './save-bookmark/save-bookmark';
+import { BookmarksActions } from './bookmarks.state';
 
 import template from './bookmarks.html';
 import './bookmarks.css';
 
 class BookmarksController {
-  constructor($scope, BookmarksModel, $ngRedux) {
+  constructor($ngRedux, BookmarksActions) {
     'ngInject';
 
-    this.$scope = $scope;
-    this.BookmarksModel = BookmarksModel;
     this.store = $ngRedux;
+    this.BookmarksActions = BookmarksActions;
   }
 
   $onInit() {
-    this.BookmarksModel.getBookmarks()
-      .then(result => this.bookmarks = result);
-
-    this.$scope.$on('onCurrentCategoryUpdated', this.reset.bind(this));
-    this.deleteBookmark = this.BookmarksModel.deleteBookmark;
-
     this.store.subscribe(() => {
+      this.bookmarks = this.store.getState().bookmarks;
+      this.currentBookmark = this.store.getState().bookmark;
       this.currentCategory = this.store.getState().category;
     });
 
-    this.reset();
+    this.store.dispatch(
+      this.BookmarksActions.getBookmarks()
+    );
   }
 
-  createBookmark() {
-    this.currentBookmark = this.initNewBookmark();
-  }
-
-  editBookmark(bookmark) {
-    this.currentBookmark = bookmark;
-  }
-
-  initNewBookmark() {
-    return {
-      id: null,
-      title: '',
-      url: '',
-      category: this.CategoriesModel.getCurrentCategory().name
-    };
+  selectBookmark(bookmark) {
+    this.store.dispatch(
+      this.BookmarksActions.selectBookmark(bookmark)
+    )
   }
 
   saveBookmark(bookmark) {
-    if (bookmark.id) {
-      this.BookmarksModel.updateBookmark(bookmark);
-    } else {
-      this.BookmarksModel.createBookmark(bookmark);
-    }
+    this.store.dispatch(
+      this.BookmarksActions.saveBookmark(bookmark)
+    )
+  }
+
+  deleteBookmark(bookmark) {
+    this.store.dispatch(
+      this.BookmarksActions.deleteBookmark(bookmark)
+    )
+  }
+
+  resetSelectedBookmark() {
+    this.store.dispatch(
+      this.BookmarksActions.resetSelectedBookmark()
+    )
   }
 
   onSave(bookmark) {
     this.saveBookmark(bookmark);
-    this.reset();
-  }
-
-  reset() {
-    this.currentBookmark = null;
+    this.resetSelectedBookmark();
   }
 }
 
@@ -71,6 +64,7 @@ const BookmarksComponent = {
 const BookmarksModule = angular.module('bookmarks', [
     SaveBookmarksModule.name
   ])
+  .factory('BookmarksActions', BookmarksActions)
   .component('bookmarks', BookmarksComponent);
 
 export default BookmarksModule;
