@@ -7,10 +7,9 @@ import template from './categories.html';
 import './categories.css';
 
 class CategoriesController {
-  constructor(CategoriesModel, $timeout) {
+  constructor($timeout) {
     'ngInject';
 
-    this.CategoriesModel = CategoriesModel;
     this.$timeout = $timeout;
   }
 
