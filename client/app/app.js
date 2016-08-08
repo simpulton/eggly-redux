@@ -11,6 +11,10 @@ import { combineReducers } from 'redux';
 import { categories, category } from './components/categories/categories.state';
 import { bookmarks, bookmark } from './components/bookmarks/bookmarks.state';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import DevTools from './dev-tools';
+
 import template from './app.html';
 import './app.css';
 
@@ -24,7 +28,15 @@ const rootReducer = combineReducers({
 const config = ($ngReduxProvider) => {
   'ngInject';
 
-  $ngReduxProvider.createStoreWith(rootReducer, [thunk]);
+  $ngReduxProvider.createStoreWith(rootReducer, [thunk], [DevTools.instrument()]);
+};
+
+const run = ($ngRedux) => {
+  'ngInject';
+  ReactDOM.render(
+    <DevTools store={$ngRedux}/>,
+    document.getElementById('devTools')
+  );
 };
 
 const AppComponent = {
@@ -36,6 +48,7 @@ let appModule = angular.module('app', [
     ComponentsModule.name
   ])
   .config(config)
+  .run(run)
   .component('app', AppComponent)
 ;
 
