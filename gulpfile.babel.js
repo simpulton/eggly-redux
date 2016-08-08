@@ -38,7 +38,10 @@ gulp.task('serve', () => {
     server: { baseDir: root },
     middleware: [
       webpackDevMiddleware(compiler, {
-        stats: false
+        stats: {
+          modules: false,
+          chunks: false
+        }
       }),
       webpackHotMiddleware(compiler)
     ]
