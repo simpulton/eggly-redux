@@ -10,7 +10,10 @@
     "angular-ui-router": "^0.3.1",
     "bootstrap-css-only": "3.3.6",
     "lodash": "^4.13.1",
-    "normalize.css": "4.1.1"
+    "ng-redux": "^3.3.3",
+    "normalize.css": "4.1.1",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "angular-mocks": "1.5.7",
@@ -38,6 +41,7 @@
     "phantomjs-prebuilt": "2.1.7",
     "raw-loader": "0.5.1",
     "react": "^15.3.0",
+    "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
     "redux-devtools": "^3.3.1",
     "redux-devtools-dock-monitor": "^1.1.1",
