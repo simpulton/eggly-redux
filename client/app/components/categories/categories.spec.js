@@ -1,66 +1,54 @@
-import { CategoriesModule, CategoriesController, CategoriesComponent } from './categories';
-import CategoriesTemplate from './categories.html';
+import { categories, category } from './categories.state';
 
 describe('Categories', () => {
-  let component, $componentController, CategoriesModel;
+  describe('categories reducer', () => {
+    const initialState = [
+      { id: 0, name: 'Development' },
+      { id: 1, name: 'Design' }
+    ];
 
-  beforeEach(() => {
-    window.module('categories');
+    it('should return state with an unknown action', () => {
+      const result = categories(initialState, { type: 'random', payload: {} });
+      expect(result).toBe(initialState);
+    });
 
-    window.module($provide => {
-      $provide.value('CategoriesModel', {
-        getCategories: () => {
-          return {
-            then: () => {}
-          };
-        }
-      });
+    it('should return an empty array for state by default', () => {
+      const result = categories(undefined, { type: 'random', payload: {} });
+      expect(result).toEqual([]);
+    });
+
+    it('should return correct payload on SET_CATEGORIES action', () => {
+      const result = categories(undefined, { type: 'GET_CATEGORIES', payload: initialState });
+      expect(result).toBe(initialState);
     });
   });
 
-  beforeEach(inject((_$componentController_, _CategoriesModel_) => {
-    CategoriesModel = _CategoriesModel_;
-    $componentController = _$componentController_;
-  }));
+  describe('category reducer', () => {
+    const initialState = { id: 0, name: 'Development' };
 
-  describe('Module', () => {
-    it('is named correctly', () => {
-      expect(CategoriesModule.name).toEqual('categories');
-    });
-  });
-
-  describe('Controller', () => {
-    it('calls CategoriesModel.getCategories immediately', () => {
-      spyOn(CategoriesModel, 'getCategories').and.callThrough();
-
-      component = $componentController('categories', {
-        CategoriesModel
-      });
-      component.$onInit();
-
-      expect(CategoriesModel.getCategories).toHaveBeenCalled();
-    });
-  });
-
-  describe('Template', () => {
-    it('includes the `category-item` directive', () => {
-      expect(CategoriesTemplate).toContain('category-item');
-    });
-  });
-
-  describe('Component', () => {
-    const component = CategoriesComponent;
-
-    it('includes the intended template',() => {
-      expect(component.template).toEqual(CategoriesTemplate);
+    it('should return state with an unknown action', () => {
+      const result = category(initialState, { type: 'random', payload: {} });
+      expect(result).toBe(initialState);
     });
 
-    it('uses the correct `controllerAs` label', () => {
-      expect(component.controllerAs).toBe('categoriesListCtrl');
+    it('should return empty object for state by default', () => {
+      const result = category(undefined, { type: 'random', payload: {} });
+      expect(result).toEqual({});
     });
 
-    it('invokes the right controller', () => {
-      expect(component.controller).toEqual(CategoriesController);
+    it('should return correct payload on SET_CURRENT_CATEGORY action', () => {
+      const newCategory = { id: 1, name: 'Design' },
+        result = category(initialState, {
+          type: 'GET_CURRENT_CATEGORY',
+          payload: newCategory
+        }),
+        emptyResult = category(initialState, {
+          type: 'GET_CURRENT_CATEGORY',
+          payload: undefined
+        });
+
+      expect(result).toBe(newCategory);
+      expect(emptyResult.name).toBeUndefined();
     });
   });
 });
