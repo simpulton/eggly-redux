@@ -49,4 +49,4 @@ const BookmarksModule = angular.module('bookmarks', [
   .factory('BookmarksActions', BookmarksActions)
   .component('bookmarks', BookmarksComponent);
 
-export default BookmarksModule;
+export { BookmarksModule, BookmarksComponent, BookmarksController };

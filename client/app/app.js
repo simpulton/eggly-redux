@@ -2,7 +2,6 @@ import 'bootstrap-css-only';
 import 'normalize.css';
 
 import angular from 'angular';
-import CommonModule from './common/common';
 import ComponentsModule from './components/components';
 
 import { combineReducers } from 'redux';
@@ -32,7 +31,6 @@ const AppComponent = {
 };
 
 let appModule = angular.module('app', [
-    CommonModule.name,
     ComponentsModule.name,
     ngRedux
   ])
