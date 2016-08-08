@@ -8,7 +8,6 @@ import serve    from 'browser-sync';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-const reload = () => serve.reload();
 const root = 'client';
 
 // helper method for resolving paths
@@ -38,16 +37,14 @@ gulp.task('serve', () => {
     server: { baseDir: root },
     middleware: [
       webpackDevMiddleware(compiler, {
-        stats: false
+        stats: {
+          modules: false,
+          chunks: false
+        }
       }),
       webpackHotMiddleware(compiler)
     ]
   });
-});
-
-gulp.task('watch', () => {
-  const allPaths = [].concat([paths.js], paths.html, [paths.css]);
-  gulp.watch(allPaths, ['serve', reload]);
 });
 
 gulp.task('default', (done) => {
