@@ -1,21 +1,22 @@
 import angular from 'angular';
 import CategoryItemModule from './category-item/category-item';
 
-import { categories, GET_CATEGORIES, category, GET_CURRENT_CATEGORY } from './categories.state';
+import { GET_CATEGORIES, category, GET_CURRENT_CATEGORY } from './categories.state';
 
 import template from './categories.html';
 import './categories.css';
 
 class CategoriesController {
-  constructor(CategoriesModel, $timeout) {
+  constructor($timeout, store) {
     'ngInject';
 
-    this.CategoriesModel = CategoriesModel;
     this.$timeout = $timeout;
+    this.store = store;
   }
 
   $onInit() {
-    this.categories = categories(undefined, { type: GET_CATEGORIES });
+    this.store.dispatch({ type: GET_CATEGORIES });
+    this.categories = this.store.getState();
 
     this.$timeout(() => {
       const payload = [
@@ -23,7 +24,8 @@ class CategoriesController {
         { id: 1, name: 'Angular' }
       ];
 
-      this.categories = categories(this.categories, { type: GET_CATEGORIES, payload });
+      this.store.dispatch({ type: GET_CATEGORIES, payload });
+      this.categories = this.store.getState();
     }, 3000);
 
     this.$timeout(() => {
@@ -31,7 +33,8 @@ class CategoriesController {
         { id: 0, name: 'Un Oh!' }
       ];
 
-      this.categories = categories(this.categories, { type: 'GET_CATEGORIES!', payload });
+      this.store.dispatch({ type: GET_CATEGORIES, payload });
+      this.categories = this.store.getState();
     }, 6000);
   }
 
