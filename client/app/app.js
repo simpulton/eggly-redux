@@ -41,7 +41,7 @@ const config = $ngReduxProvider => {
   $ngReduxProvider.createStoreWith(rootReducer, [thunk], [DevTools.instrument()]);
 };
 
-const run = ($ngRedux, $rootScope, $timeout) => {
+const run = ($ngRedux, $rootScope) => {
   'ngInject';
 
   const componentDidUpdate = DockMonitor.prototype.componentDidUpdate;
