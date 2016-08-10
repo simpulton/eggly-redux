@@ -31,17 +31,9 @@ class BookmarksController {
     )
   }
 
-  saveBookmark(bookmark) {
-    this.store.dispatch(
-      this.BookmarksActions.saveBookmark(bookmark)
-    )
-  }
+  saveBookmark(bookmark) { }
 
-  deleteBookmark(bookmark) {
-    this.store.dispatch(
-      this.BookmarksActions.deleteBookmark(bookmark)
-    )
-  }
+  deleteBookmark(bookmark) { }
 
   resetSelectedBookmark() {
     this.store.dispatch(
